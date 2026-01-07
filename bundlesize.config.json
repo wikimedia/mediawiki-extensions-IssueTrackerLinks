@@ -1,0 +1,10 @@
+[
+	{
+		"resourceModule": "ext.issuetrackerlinks.definition",
+		"maxSize": "2 kB"
+	},
+	{
+		"resourceModule": "ext.issuetrackerlinks.bootstrap",
+		"maxSize": "2 kB"
+	}
+]

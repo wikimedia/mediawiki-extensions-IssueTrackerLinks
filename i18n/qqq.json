@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"[https://www.hallowelt.com Hallo Welt! GmbH]"
+		]
+	},
+	"issuetrackerlinks-desc": "Extension description",
+	"issuetrackerlinks-type-label-github": "Tracker type label",
+	"issuetrackerlinks-type-label-gitlab": "Tracker type label",
+	"issuetrackerlinks-type-label-jira": "Tracker type label",
+	"issuetrackerlinks-inspector-header-title": "Label for the tag inspector and droplet.\n$1 - tracker type label",
+	"issuetrackerlinks-invalid-config-warning": "Warning shown when the configuration is invalid",
+	"issuetrackerlinks-unknown-type": "Error message when tracker type is used but not configured",
+	"issuetrackerlinks-generic-droplet-desc": "Description for the droplet",
+	"issuetrackerlinks-field-url": "Form field label",
+	"issuetrackerlinks-inspector-title": "Generic issue tracker link - when no particular type is set",
+	"issuetrackerlinks-sesp-alias": "Semantic property label",
+	"issuetrackerlinks-sesp-desc": "Semantic property description"
+}
