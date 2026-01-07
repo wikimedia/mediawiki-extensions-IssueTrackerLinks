@@ -1,0 +1,151 @@
+{
+	"name": "IssueTrackerLinks",
+	"version": "1.0.1",
+	"license-name": "GPL-3.0-only",
+	"author": [
+		"[https://www.hallowelt.com Hallo Welt! GmbH]"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:IssueTrackerLinks",
+	"descriptionmsg": "issuetrackerlinks-desc",
+	"requires": {
+		"MediaWiki": ">= 1.43.0",
+		"extensions": {
+			"VisualEditor": "*",
+			"VisualEditorPlus": "*"
+		}
+	},
+	"attributes": {
+		"ContentDroplets": {
+			"Droplets": {
+				"github": {
+					"class": "\\MediaWiki\\Extension\\IssueTrackerLinks\\ContentDroplets\\GithubDroplet"
+				},
+				"gitlab": {
+					"class": "\\MediaWiki\\Extension\\IssueTrackerLinks\\ContentDroplets\\GitlabDroplet"
+				},
+				"jira": {
+					"class": "\\MediaWiki\\Extension\\IssueTrackerLinks\\ContentDroplets\\JiraDroplet"
+				}
+			}
+		},
+		"VisualEditor": {
+			"PluginModules": [ "ext.issuetrackerlinks.ve.paste", "ext.issuetrackerlinks.ve.sequence" ]
+		},
+		"BlueSpiceSMWConnector": {
+			"ExtraPropertyRegistry": {
+				"issue-tracker-links": "MediaWiki\\Extension\\IssueTrackerLinks\\Property\\IssueTrackerLinksValueProvider::factory"
+			}
+		}
+	},
+	"MessagesDirs": {
+		"IssueTrackerLinks": "i18n"
+	},
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\IssueTrackerLinks\\": "src/"
+	},
+	"ResourceModules": {
+		"ext.issuetrackerlinks.styles": {
+			"styles": [
+				"stylesheets/pill-styles.less"
+			]
+		},
+		"ext.issuetrackerlinks.commands": {
+			"scripts": [
+				"ui/ext.issuetrackerlinks.commands.js"
+			],
+			"styles": [
+				"stylesheets/contentdroplets-styles.css"
+			]
+		},
+		"ext.issuetrackerlinks.definition": {
+			"packageFiles": [
+				{
+					"name": "patterns.json",
+					"callback": "MediaWiki\\Extension\\IssueTrackerLinks\\PatternConfig::getClientConfig"
+				},
+				"ui/ext.issuetrackerlinks.definition.js"
+			],
+			"dependencies": [
+				"ext.visualEditorPlus.tags.definition",
+				"ext.issuetrackerlinks.bootstrap"
+			]
+		},
+		"ext.issuetrackerlinks.droplet.form": {
+			"packageFiles": [
+				{
+					"name": "patterns.json",
+					"callback": "MediaWiki\\Extension\\IssueTrackerLinks\\PatternConfig::getClientConfig"
+				},
+				"ui/ext.issuetrackerlinks.droplet.form.js"
+			],
+			"messages": [
+				"issuetrackerlinks-field-url",
+				"issuetrackerlinks-type-label-github",
+				"issuetrackerlinks-type-label-gitlab",
+				"issuetrackerlinks-type-label-jira",
+				"issuetrackerlinks-inspector-header-title"
+			],
+			"dependencies": [
+				"ext.forms.standalone",
+				"ext.issuetrackerlinks.bootstrap"
+			]
+		},
+		"ext.issuetrackerlinks.bootstrap": {
+			"scripts": [
+				"ext.issuetrackerlinks.bootstrap.js"
+			]
+		},
+		"ext.issuetrackerlinks.ve.sequence": {
+			"packageFiles": [
+				{
+					"name": "patterns.json",
+					"callback": "MediaWiki\\Extension\\IssueTrackerLinks\\PatternConfig::getClientConfig"
+				},
+				"ui/ext.issuetrackerlinks.sequence.js"
+			],
+			"dependencies": [
+				"ext.issuetrackerlinks.bootstrap",
+				"ext.visualEditor.core"
+			]
+		},
+		"ext.issuetrackerlinks.ve.paste": {
+			"packageFiles": [
+				{
+					"name": "patterns.json",
+					"callback": "MediaWiki\\Extension\\IssueTrackerLinks\\PatternConfig::getClientConfig"
+				},
+				"ui/ext.issuetrackerlinks.paste.js"
+			],
+			"dependencies": [
+				"ext.issuetrackerlinks.bootstrap",
+				"ext.visualEditor.core"
+			]
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "resources",
+		"remoteExtPath": "IssueTrackerLinks/resources"
+	},
+	"Hooks": {
+		"MWStakeGenericTagHandlerInitTags": "registerTags",
+		"LoadExtensionSchemaUpdates": "runDatabaseUpdates",
+		"BeforePageDisplay": [ "checkConfigValidity", "registerTags" ]
+	},
+	"HookHandlers": {
+		"registerTags": {
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Hook\\RegisterTags"
+		},
+		"runDatabaseUpdates": {
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Hook\\RunDatabaseUpdates"
+		},
+		"checkConfigValidity": {
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Hook\\CheckConfigValidity",
+			"services": [ "IssueTrackerLinks.PatternConfig" ]
+		}
+	},
+	"ServiceWiringFiles": [
+		"includes/ServiceWiring.php"
+	],
+	"RestRoutes": [],
+	"manifest_version": 2
+}

@@ -1,0 +1,11 @@
+.droplet .icon-droplet.droplet-jira {
+	background-image: url( ./../images/contentdroplets-jira-icon.svg );
+}
+
+.droplet .icon-droplet.droplet-github {
+	background-image: url( ./../images/contentdroplets-github-icon.svg );
+}
+
+.droplet .icon-droplet.droplet-gitlab {
+	background-image: url( ./../images/contentdroplets-gitlab-icon.svg );
+}

@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"[https://www.hallowelt.com Hallo Welt! GmbH]"
+		]
+	},
+	"issuetrackerlinks-desc": "Links for issue trackers",
+	"issuetrackerlinks-type-label-github": "GitHub",
+	"issuetrackerlinks-type-label-gitlab": "GitLab",
+	"issuetrackerlinks-type-label-jira": "Jira",
+	"issuetrackerlinks-inspector-header-title": "$1 issue link",
+	"issuetrackerlinks-invalid-config-warning": "Warning: Invalid configuration for IssueTrackerLinks extension.\n* Configuration array must contains keys that are unique IDs of type of tracker links\n* Each configuration must contain a <code>url</code> key with a valid URL containing a <code>{param-name}</code> placeholder for the variable parts of the URL",
+	"issuetrackerlinks-unknown-type": "Unknown issue tracker type \"$1\". Check your configuration.",
+	"issuetrackerlinks-generic-droplet-desc": "Insert issue tracker link",
+	"issuetrackerlinks-field-url": "Issue URL",
+	"issuetrackerlinks-inspector-title": "Issue link",
+	"issuetrackerlinks-sesp-alias": "Issue tracker links",
+	"issuetrackerlinks-sesp-desc": "Issue links on this page"
+}
