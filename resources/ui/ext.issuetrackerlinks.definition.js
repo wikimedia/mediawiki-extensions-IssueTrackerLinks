@@ -64,7 +64,7 @@ ext.issuetrackerlinks.droplet.TagDefinition.prototype.updateMwData =
 mw.hook( 'ext.visualEditorPlus.tags.registerTags' ).add( ( _registry, tags ) => {
 	for ( let i = 0; i < tags.length; i++ ) {
 		const tag = tags[ i ];
-		if ( tag.tags.indexOf( 'issue' ) !== -1 ) {
+		if ( tag.tags.includes( 'issue' ) ) {
 			_registry.registerTagDefinition(
 				new ext.issuetrackerlinks.droplet.TagDefinition( tag.clientSpecification )
 			);
