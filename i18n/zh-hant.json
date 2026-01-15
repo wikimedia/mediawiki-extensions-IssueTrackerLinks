@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"issuetrackerlinks-desc": "問題追蹤器的連結",
+	"issuetrackerlinks-inspector-header-title": "$1問題連結",
+	"issuetrackerlinks-unknown-type": "未知問題追蹤器類型「$1」。請檢查您的組態。",
+	"issuetrackerlinks-generic-droplet-desc": "插入問題追蹤連結",
+	"issuetrackerlinks-field-url": "問題 URL",
+	"issuetrackerlinks-inspector-title": "問題連結",
+	"issuetrackerlinks-sesp-alias": "問題追蹤連結",
+	"issuetrackerlinks-sesp-desc": "此頁面的問題連結"
+}
