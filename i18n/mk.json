@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"issuetrackerlinks-desc": "Врски за следачи на проблеми",
+	"issuetrackerlinks-inspector-header-title": "Врска за проблемот $1",
+	"issuetrackerlinks-invalid-config-warning": "Предупредување: Неважечка наместенот на додатокот IssueTrackerLinks.\n* Стројот на поставеноста мора да содржи клучеви кои се единствени назнаки од видот врски за следачи\n* Секоја наместеност мора да содржи клуч <code>url</code> со важечка URL која содржи пополнувач <code>{param-name}</code> за променливите делови на URL-то",
+	"issuetrackerlinks-unknown-type": "Непознат вид на следач на проблеми „$1“. Проверете ја наместеноста.",
+	"issuetrackerlinks-generic-droplet-desc": "Внесете врска за следач на проблемот",
+	"issuetrackerlinks-field-url": "URL на проблемот",
+	"issuetrackerlinks-inspector-title": "Врска за проблем",
+	"issuetrackerlinks-sesp-alias": "Врски за следачи на проблеми",
+	"issuetrackerlinks-sesp-desc": "Врски за проблеми на оваа страница"
+}
