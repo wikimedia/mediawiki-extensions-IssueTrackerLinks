@@ -59,7 +59,7 @@ class IssueTagHandler implements ITagHandler {
 		// Match all {param}s from mask to available params, and replace. If not found, skip it
 		return preg_replace_callback(
 			'/\{([a-zA-Z0-9_-]+)\}/',
-			fn ( $matches ) => $params[$matches[1]] ?? '',
+			static fn ( $matches ) => $params[$matches[1]] ?? '',
 			$mask
 		);
 	}
@@ -73,7 +73,7 @@ class IssueTagHandler implements ITagHandler {
 		$urlMask = $config['url'];
 		return preg_replace_callback(
 			'/\{([a-zA-Z0-9_-]+)\}/',
-			fn ( $matches ) => $params[$matches[1]] ?? '',
+			static fn ( $matches ) => $params[$matches[1]] ?? '',
 			$urlMask
 		);
 	}

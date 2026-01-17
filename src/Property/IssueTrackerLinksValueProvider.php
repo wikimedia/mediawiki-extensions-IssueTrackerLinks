@@ -24,7 +24,6 @@ class IssueTrackerLinksValueProvider extends PropertyValueProvider {
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
 	public function getAliasMessageKey() {
@@ -32,7 +31,6 @@ class IssueTrackerLinksValueProvider extends PropertyValueProvider {
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
 	public function getDescriptionMessageKey() {
@@ -40,7 +38,6 @@ class IssueTrackerLinksValueProvider extends PropertyValueProvider {
 	}
 
 	/**
-	 *
 	 * @return int
 	 */
 	public function getType() {
@@ -48,7 +45,6 @@ class IssueTrackerLinksValueProvider extends PropertyValueProvider {
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
 	public function getId() {
@@ -56,7 +52,6 @@ class IssueTrackerLinksValueProvider extends PropertyValueProvider {
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
 	public function getLabel() {
