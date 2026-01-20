@@ -4,10 +4,5 @@
 			"[https://www.hallowelt.com Hallo Welt! GmbH]"
 		]
 	},
-	"issuetrackerlinks-desc": "Links für Issue-Tracker",
-	"issuetrackerlinks-pref-url-patterns": "URL-Muster für die automatische Erkennung von Issue-Tracker-Links",
-	"issuetrackerlinks-pref-url-patterns-prefix": "Präfix",
-	"issuetrackerlinks-pref-url-patterns-prefix-help": "Präfix zur Kennzeichnung des Typs des Issue Trackers im Seiteninhalt. Beispielsweise werden bei Verwendung des Präfixes \"bug\" alle Vorkommen von \"BUG123\" automatisch in einen Link zum Issue Tracker mit diesem Präfix umgewandelt. Beachten Sie, dass dies nur funktioniert, wenn das URL-Muster den Platzhalter \"<id>\" und keine anderen Platzhalter enthält.",
-	"issuetrackerlinks-pref-url-patterns-url": "URL-Muster, das übereinstimmen muss",
-	"issuetrackerlinks-pref-url-patterns-url-help": "Muster, das beim Erkennen von Issue-Tracker-Links übereinstimmen muss. Verwenden Sie \"<id>\" als Platzhalter für die Issue-ID. Sie können auch \"<prefix>\" als Platzhalter für das oben definierte Präfix verwenden. Beispiel: \"https://example.com/issues/<id>\" oder \"https://example.com/<prefix>/issues/<id>\". Sie können auch \"<project>\" als Platzhalter für die Problem-ID verwenden (erforderlich). Die URL kann auch andere beliebige Platzhalter für alle Teile der URL enthalten, die variieren können."
+	"issuetrackerlinks-desc": "Links für Issue-Tracker"
 }
