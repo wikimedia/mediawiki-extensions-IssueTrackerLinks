@@ -6,6 +6,7 @@
 	},
 	"issuetrackerlinks-desc": "問題追蹤器的連結",
 	"issuetrackerlinks-inspector-header-title": "$1問題連結",
+	"issuetrackerlinks-invalid-config-warning": "警告：IssueTrackerLinks 擴充的組態無效。\n* 組態陣列必須包含唯一 ID 類型的追蹤連結鍵\n* 每個組態必須包含一個 <code>url</code> 鍵，該鍵指向一個有效的 URL，該 URL 包含一個 <code>{param-name}</code> 佔位符號，用於表示 URL 的可變部分。",
 	"issuetrackerlinks-unknown-type": "未知問題追蹤器類型「$1」。請檢查您的組態。",
 	"issuetrackerlinks-generic-droplet-desc": "插入問題追蹤連結",
 	"issuetrackerlinks-field-url": "問題 URL",
