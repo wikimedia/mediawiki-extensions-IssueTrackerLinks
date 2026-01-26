@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Peterxy12"
+		]
+	},
+	"issuetrackerlinks-desc": "问题跟踪器的链接",
+	"issuetrackerlinks-type-label-github": "GitHub",
+	"issuetrackerlinks-type-label-gitlab": "GitLab",
+	"issuetrackerlinks-type-label-jira": "Jira",
+	"issuetrackerlinks-inspector-header-title": "$1问题链接",
+	"issuetrackerlinks-invalid-config-warning": "警告：IssueTrackerLinks扩充的配置无效。\n* 配置阵列必须包含唯一ID类型的追踪链接键\n* 每个配置必须包含一个<code>url</code>键，该键指向一个有效的URL，该URL包含一个<code>{param-name}</code>占位符号，用于表示URL的可变部分。",
+	"issuetrackerlinks-unknown-type": "未知问题跟踪器类型“$1”。请检查您的配置。",
+	"issuetrackerlinks-generic-droplet-desc": "插入问题跟踪链接",
+	"issuetrackerlinks-field-url": "问题URL",
+	"issuetrackerlinks-inspector-title": "问题链接",
+	"issuetrackerlinks-sesp-alias": "问题跟踪链接",
+	"issuetrackerlinks-sesp-desc": "此页面的问题链接"
+}
