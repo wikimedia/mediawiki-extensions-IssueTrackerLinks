@@ -1,14 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"[https://www.hallowelt.com Hallo Welt! GmbH]"
+			"[https://www.hallowelt.com Hallo Welt! GmbH]",
+			"McDutchie"
 		]
 	},
 	"issuetrackerlinks-desc": "Extension description",
 	"issuetrackerlinks-type-label-github": "Tracker type label",
 	"issuetrackerlinks-type-label-gitlab": "Tracker type label",
 	"issuetrackerlinks-type-label-jira": "Tracker type label",
-	"issuetrackerlinks-inspector-header-title": "Label for the tag inspector and droplet.\n$1 - tracker type label",
+	"issuetrackerlinks-inspector-header-title": "Label for the tag inspector and droplet.\n* $1 – tracker type label",
 	"issuetrackerlinks-invalid-config-warning": "Warning shown when the configuration is invalid",
 	"issuetrackerlinks-unknown-type": "Error message when tracker type is used but not configured",
 	"issuetrackerlinks-generic-droplet-desc": "Description for the droplet",

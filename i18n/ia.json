@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"issuetrackerlinks-desc": "Ligamines pro traciatores de problemas",
+	"issuetrackerlinks-inspector-header-title": "Ligamine al problema sur $1",
+	"issuetrackerlinks-invalid-config-warning": "Advertimento: Le configuration del extension IssueTrackerLinks non es valide.\n* Le matrice de configurationes debe continer claves que es IDs unic de typo de ligamines de traciator.\n* Cata configuration debe continer un clave <code>url</code> con un URL valide que contine un marcator de position <code>{param-name}</code> pro le partes variabile del URL.",
+	"issuetrackerlinks-unknown-type": "Le typo de traciator de problemas “$1” non es cognoscite. Verifica tu configuration.",
+	"issuetrackerlinks-generic-droplet-desc": "Inserer ligamine al traciator de problemas",
+	"issuetrackerlinks-field-url": "URL del problema",
+	"issuetrackerlinks-inspector-title": "Ligamine al problema",
+	"issuetrackerlinks-sesp-alias": "Ligamines a traciatores de problemas",
+	"issuetrackerlinks-sesp-desc": "Ligamines a problemas sur iste pagina"
+}
