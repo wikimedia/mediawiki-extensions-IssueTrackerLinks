@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Siebrand"
+		]
+	},
+	"issuetrackerlinks-desc": "Koppelingen naar ticketsystemen",
+	"issuetrackerlinks-inspector-header-title": "$1 ticketkoppeling",
+	"issuetrackerlinks-invalid-config-warning": "Waarschuwing: Ongeldige instellingen voor de uitbreiding IssueTrackerLinks.\n* De instellingen-array moet eigenschappen bevatten die unieke ID's zijn van het type trackerkoppelingen\n* Elke instelling moet een <code>url</code>-eigenschap bevatten met een geldige URL die een tijdelijke aanduiding <code>{param-name}</code> bevat voor de variabele onderdelen van de URL",
+	"issuetrackerlinks-unknown-type": "Onbekend type ticketsysteem \"$1\". Controleer uw instellingen.",
+	"issuetrackerlinks-generic-droplet-desc": "Voeg de koppeling naar het ticketsysteem toe",
+	"issuetrackerlinks-field-url": "Ticket-URL",
+	"issuetrackerlinks-inspector-title": "Ticketkoppeling",
+	"issuetrackerlinks-sesp-alias": "Koppelingen naar ticketsystemen",
+	"issuetrackerlinks-sesp-desc": "Ticketkoppelingen op deze pagina"
+}
