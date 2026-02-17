@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Toliño"
+		]
+	},
+	"issuetrackerlinks-desc": "Ligazóns para os rastrexadores de problemas",
+	"issuetrackerlinks-inspector-header-title": "Ligazón de problema «$1»",
+	"issuetrackerlinks-invalid-config-warning": "Aviso: A configuración non é válida para a extensión IssueTrackerLinks.\n* A matriz de configuración debe conter claves que sexan identificadores únicos do tipo de ligazóns de rastrexo.\n* Cada configuración debe conter unha clave <code>url</code> cun enderezo URL válido que conteña un marcador de posición <code>{nome-do-parámetro}</code> para as partes variables do enderezo URL.",
+	"issuetrackerlinks-unknown-type": "Descoñécese o tipo de rastrexador de problemas «$1». Comproba a túa configuración.",
+	"issuetrackerlinks-generic-droplet-desc": "Inserir a ligazón ao rastrexador de problemas",
+	"issuetrackerlinks-field-url": "URL do problema",
+	"issuetrackerlinks-inspector-title": "Ligazón ao problema",
+	"issuetrackerlinks-sesp-alias": "Ligazóns do rastrexador de problemas",
+	"issuetrackerlinks-sesp-desc": "Ligazóns de problemas nesta páxina"
+}
