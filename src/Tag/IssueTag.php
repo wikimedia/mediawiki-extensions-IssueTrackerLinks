@@ -12,6 +12,7 @@ use MWStake\MediaWiki\Component\GenericTagHandler\ITagHandler;
 use MWStake\MediaWiki\Component\InputProcessor\Processor\StringValue;
 
 class IssueTag extends GenericTag {
+// @phan-suppress-previous-line PhanUndeclaredExtendedClass
 
 	/**
 	 * @return string[]
@@ -41,7 +42,9 @@ class IssueTag extends GenericTag {
 	 */
 	public function getParamDefinition(): ?array {
 		return [
+			// @phan-suppress-next-line PhanUndeclaredClassMethod
 			'params' => ( new StringValue() )->setRequired( true ),
+			// @phan-suppress-next-line PhanUndeclaredClassMethod
 			'type' => ( new StringValue() )->setRequired( true )
 		];
 	}
@@ -58,6 +61,7 @@ class IssueTag extends GenericTag {
 	 * @return ITagHandler
 	 */
 	public function getHandler( MediaWikiServices $services ): ITagHandler {
+		// @phan-suppress-previous-line PhanUndeclaredTypeReturnType
 		return new IssueTagHandler( $services->getService( 'IssueTrackerLinks.PatternConfig' ) );
 	}
 
@@ -65,9 +69,12 @@ class IssueTag extends GenericTag {
 	 * @inheritDoc
 	 */
 	public function getClientTagSpecification(): ClientTagSpecification|null {
+		// @phan-suppress-previous-line PhanUndeclaredTypeReturnType
+		// @phan-suppress-next-line PhanUndeclaredClassMethod
 		return new ClientTagSpecification(
 			'IssueTrackerLink',
 			new RawMessage( '' ),
+			// @phan-suppress-next-line PhanUndeclaredClassMethod
 			new FormLoaderSpecification(
 				'ext.issuetrackerlinks.droplet.Form', [ 'ext.issuetrackerlinks.droplet.form' ]
 			),

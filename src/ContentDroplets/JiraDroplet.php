@@ -6,6 +6,7 @@ use MediaWiki\Extension\ContentDroplets\Droplet\TagDroplet;
 use MediaWiki\Message\Message;
 
 class JiraDroplet extends TagDroplet {
+// @phan-suppress-previous-line PhanUndeclaredExtendedClass
 
 	/**
 	 * @inheritDoc
