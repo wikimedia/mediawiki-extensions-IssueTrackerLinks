@@ -8,7 +8,11 @@ use MediaWiki\Page\WikiPageFactory;
 use SMWDataItem;
 
 class IssueTrackerLinksValueProvider extends PropertyValueProvider {
+// @phan-suppress-previous-line PhanUndeclaredExtendedClass
 
+	/**
+	 * @inheritDoc
+	 */
 	public static function factory() {
 		return [ new static(
 			MediaWikiServices::getInstance()->getWikiPageFactory()
@@ -44,6 +48,7 @@ class IssueTrackerLinksValueProvider extends PropertyValueProvider {
 	 * @return int
 	 */
 	public function getType() {
+		// @phan-suppress-next-line PhanUndeclaredClassConstant
 		return SMWDataItem::TYPE_URI;
 	}
 
@@ -64,10 +69,7 @@ class IssueTrackerLinksValueProvider extends PropertyValueProvider {
 	}
 
 	/**
-	 * @param \SESP\AppFactory $appFactory
-	 * @param \SMW\DIProperty $property
-	 * @param \SMW\SemanticData $semanticData
-	 * @return void
+	 * @inheritDoc
 	 */
 	public function addAnnotation( $appFactory, $property, $semanticData ) {
 		$title = $semanticData->getSubject()->getTitle();
@@ -85,7 +87,8 @@ class IssueTrackerLinksValueProvider extends PropertyValueProvider {
 		foreach ( $tags as $i => $tag ) {
 			$semanticData->addPropertyObjectValue(
 				$property,
-				 \SMWDIUri::newFromSerialization( SMWDataItem::TYPE_URI, $tag )
+				// @phan-suppress-next-line PhanUndeclaredClassMethod, PhanUndeclaredClassConstant
+				\SMWDIUri::newFromSerialization( SMWDataItem::TYPE_URI, $tag )
 			);
 		}
 	}

@@ -15,9 +15,10 @@ class PatternConfig {
 	/**
 	 * @param Context $context
 	 * @param Config $config
-	 * @return string
+	 * @return array
 	 */
 	public static function getClientConfig( Context $context, Config $config ): array {
+		/** @var PatternConfig */
 		$self = MediaWikiServices::getInstance()->getService( 'IssueTrackerLinks.PatternConfig' );
 		return $self->getFullConfig();
 	}
@@ -92,17 +93,27 @@ class PatternConfig {
 	 * @return void
 	 */
 	private function load() {
-		if ( $this->patterns === null ) {
-			$data = $this->getRawData();
-			if ( !$this->validateData( $data ) ) {
-				$this->logger->error(
-					'IssueTrackerLinks: Config page contains invalid data structure: ' . static::CONFIG_PAGE
-				);
-				$this->patterns = [];
-				return;
-			}
-			$this->patterns = $data;
+		if ( $this->patterns !== null ) {
+			return;
 		}
+
+		$data = $this->getRawData();
+		if ( !$data ) {
+			$this->logger->error(
+				'IssueTrackerLinks: Config page returned no data: ' . static::CONFIG_PAGE
+			);
+			$this->patterns = [];
+			return;
+		}
+
+		if ( !$this->validateData( $data ) ) {
+			$this->logger->error(
+				'IssueTrackerLinks: Config page contains invalid data structure: ' . static::CONFIG_PAGE
+			);
+			$this->patterns = [];
+			return;
+		}
+		$this->patterns = $data;
 	}
 
 	/**
@@ -142,7 +153,7 @@ class PatternConfig {
 			return null;
 		}
 		$text = $content->getText();
-		if ( empty( $text ) ) {
+		if ( !$text ) {
 			$this->logger->warning( 'IssueTrackerLinks: Config page is empty: ' . static::CONFIG_PAGE );
 			return [];
 		}

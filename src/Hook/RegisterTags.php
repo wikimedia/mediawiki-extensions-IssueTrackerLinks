@@ -7,6 +7,7 @@ use MediaWiki\Hook\BeforePageDisplayHook;
 use MWStake\MediaWiki\Component\GenericTagHandler\Hook\MWStakeGenericTagHandlerInitTagsHook;
 
 class RegisterTags implements MWStakeGenericTagHandlerInitTagsHook, BeforePageDisplayHook {
+// @phan-suppress-previous-line PhanUndeclaredInterface
 
 	/**
 	 * @inheritDoc

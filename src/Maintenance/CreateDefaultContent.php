@@ -15,13 +15,19 @@ class CreateDefaultContent extends LoggedUpdateMaintenance {
 	 */
 	protected function doDBUpdates() {
 		$this->output( "Creating default IssueTrackerLinks configuration page..." );
+
 		$title = $this->getServiceContainer()->getTitleFactory()->newFromText(
 			PatternConfig::CONFIG_PAGE
 		);
+		if ( !$title ) {
+			$this->output( "Invalid configuration page title.\n" );
+			return false;
+		}
 		if ( $title->exists() ) {
 			$this->output( "IssueTrackerLinks config page already exists, skipping creation.\n" );
 			return true;
 		}
+
 		$wikiPage = $this->getServiceContainer()->getWikiPageFactory()->newFromTitle( $title );
 		$updater = $wikiPage->newPageUpdater( User::newSystemUser( 'MediaWiki default', [ 'steal' => true ] ) );
 

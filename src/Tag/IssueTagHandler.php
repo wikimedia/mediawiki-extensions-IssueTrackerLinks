@@ -12,6 +12,7 @@ use MWStake\MediaWiki\Component\GenericTagHandler\ITagHandler;
 use OOUI\MessageWidget;
 
 class IssueTagHandler implements ITagHandler {
+// @phan-suppress-previous-line PhanUndeclaredInterface
 
 	/**
 	 * @param PatternConfig $patternConfig
