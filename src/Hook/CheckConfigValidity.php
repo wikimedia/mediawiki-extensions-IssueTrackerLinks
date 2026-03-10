@@ -22,7 +22,7 @@ class CheckConfigValidity implements BeforePageDisplayHook {
 			if ( !$this->patternConfig->isValid() ) {
 				$out->enableOOUI();
 				$out->prependHTML(
-					new MessageWidget( [
+					(string)new MessageWidget( [
 						'type' => 'error',
 						'label' => new HtmlSnippet(
 							$out->getContext()->msg( 'issuetrackerlinks-invalid-config-warning' )->parse()
