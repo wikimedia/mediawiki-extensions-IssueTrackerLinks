@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Meno25"
+		]
+	},
+	"issuetrackerlinks-desc": "روابط لأنظمة تتبع المشكلات",
+	"issuetrackerlinks-inspector-header-title": "رابط الإصدار $1",
+	"issuetrackerlinks-invalid-config-warning": "تحذير: إعدادات غير صالحة لملحق IssueTrackerLinks. يجب أن تحتوي مصفوفة الإعدادات على مفاتيح تمثل معرّفات فريدة من نوع روابط التتبع. يجب أن يحتوي كل إعداد على مفتاح <code>url</code> مع عنوان URL صالح يتضمن عنصر نائب <code>{param-name}</code> للأجزاء المتغيرة من عنوان URL.",
+	"issuetrackerlinks-unknown-type": "نوع متتبع المشكلات غير معروف \" $1 \". تحقق من إعداداتك.",
+	"issuetrackerlinks-generic-droplet-desc": "أدخل رابط متتبع المشكلات",
+	"issuetrackerlinks-field-url": "رابط المشكلة",
+	"issuetrackerlinks-inspector-title": "رابط المشكلة",
+	"issuetrackerlinks-sesp-alias": "روابط تتبع المشكلات",
+	"issuetrackerlinks-sesp-desc": "روابط المشكلات موجودة في هذه الصفحة"
+}
