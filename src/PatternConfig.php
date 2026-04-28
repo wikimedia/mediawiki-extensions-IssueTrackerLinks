@@ -9,6 +9,7 @@ use MediaWiki\Page\WikiPageFactory;
 use MediaWiki\ResourceLoader\Context;
 use MediaWiki\Title\TitleFactory;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 
 class PatternConfig {
 
@@ -141,9 +142,15 @@ class PatternConfig {
 	 * @return array|null
 	 */
 	private function getRawData(): ?array {
-		$page = $this->titleFactory->newFromText( static::CONFIG_PAGE );
-		if ( !$page || !$page->exists() ) {
-			$this->logger->warning( 'IssueTrackerLinks: Config page does not exist: ' . static::CONFIG_PAGE );
+		try {
+			$page = $this->titleFactory->newFromText( static::CONFIG_PAGE );
+			if ( !$page || !$page->exists() ) {
+				$this->logger->warning( 'IssueTrackerLinks: Config page does not exist: ' . static::CONFIG_PAGE );
+				return [];
+			}
+		} catch ( RuntimeException $e ) {
+			// DB backend may be disabled during bundle size tests
+			$this->logger->warning( 'IssueTrackerLinks: Could not check config page: ' . $e->getMessage() );
 			return [];
 		}
 		$wp = $this->wikiPageFactory->newFromTitle( $page );
