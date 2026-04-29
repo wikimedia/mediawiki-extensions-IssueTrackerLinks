@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tensama0415"
+		]
+	},
+	"issuetrackerlinks-desc": "이슈 트래커를 위한 링크",
+	"issuetrackerlinks-inspector-header-title": "$1 이슈 링크",
+	"issuetrackerlinks-unknown-type": "알 수 없는 이슈 트래커 유형 \"$1\" 입니다. 구성을 확인하세요.",
+	"issuetrackerlinks-generic-droplet-desc": "이슈 트래커 링크 삽입",
+	"issuetrackerlinks-field-url": "이슈 URL",
+	"issuetrackerlinks-inspector-title": "이슈 링크",
+	"issuetrackerlinks-sesp-alias": "이슈 트래커 링크",
+	"issuetrackerlinks-sesp-desc": "이 문서의 이슈 링크"
+}
