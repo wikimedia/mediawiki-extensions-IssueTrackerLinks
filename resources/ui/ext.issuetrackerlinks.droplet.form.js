@@ -86,7 +86,7 @@ ext.issuetrackerlinks.droplet.Form.prototype.setInspectorTitle = function ( key 
 	let typeLabel = key;
 	const pattern = this.patterns[ key ] || null;
 	if ( pattern && pattern.label ) {
-		const msg = mw.message( pattern.label ); // eslint-disable-line mediawiki/msg-doc
+		const msg = mw.message( pattern.label );
 		if ( msg.exists() ) {
 			typeLabel = msg.text();
 		} else {
