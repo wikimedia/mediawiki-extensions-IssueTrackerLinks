@@ -12,5 +12,5 @@
 	"issuetrackerlinks-inspector-title": "이슈 링크",
 	"issuetrackerlinks-sesp-alias": "이슈 트래커 링크",
 	"issuetrackerlinks-sesp-desc": "이 문서의 이슈 링크",
-	"issuetrackerlinks-invalid-config-warning": "경고: IssueTrackerLinks 확장 기능에 대한 구성이 잘못되었습니다.\n* 구성 배열에는 추적 링크 유형의 고유 ID 키가 포함되어야 합니다\n* 각 구성에는 URL의 변수 부분을 위한 <code>{param-name}</code> 플레이스홀더가 포함된 유효한 URL이 있는 <code>url</code> 키가 포함되어야 합니다"
+	"issuetrackerlinks-invalid-config-warning": "경고: IssueTrackerLinks 확장 기능에 대한 구성이 잘못되었습니다.\n* 구성 배열에는 추적 링크 유형의 고유 ID 키가 포함되어야 합니다\n* 각 구성에는 URL의 변수 부분을 위한 <code>{param-name}</code> 자리 표시자가 포함된 유효한 URL이 있는 <code>url</code> 키가 포함되어야 합니다"
 }
