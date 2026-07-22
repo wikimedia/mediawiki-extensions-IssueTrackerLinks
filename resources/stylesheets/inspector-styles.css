@@ -1,0 +1,7 @@
+.issuetrackerlinks-inspector-link-preview {
+	display: block;
+	margin-top: 4px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
