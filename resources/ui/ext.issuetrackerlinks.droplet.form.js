@@ -9,6 +9,14 @@ ext.issuetrackerlinks.droplet.Form = function ( config ) {
 	this.patternRegex = null;
 	this.innerForm = null;
 	this.commandParams = this.inspector.commandParams || {};
+
+	this.$linkPreview = $( '<a>' )
+		.addClass( 'issuetrackerlinks-inspector-link-preview' )
+		.attr( {
+			target: '_blank',
+			rel: 'noopener'
+		} )
+		.hide();
 };
 
 OO.inheritClass( ext.issuetrackerlinks.droplet.Form, mw.ext.forms.standalone.Form );
@@ -55,6 +63,12 @@ ext.issuetrackerlinks.droplet.Form.prototype.onRenderComplete = function ( form 
 		this.setInspectorTitle( newValue );
 		this.setPatternRegex( newValue );
 	}
+
+	// Append clickable link preview above the URL input
+	form.getItem( 'url' ).$element.before( this.$linkPreview );
+	form.getItem( 'url' ).connect( this, { change: 'updateLinkPreview' } );
+	this.updateLinkPreview( form.getItem( 'url' ).getValue() );
+
 	setTimeout( () => {
 		// Exec in next loop
 		if ( initValue !== newValue ) {
@@ -101,5 +115,26 @@ ext.issuetrackerlinks.droplet.Form.prototype.setPatternRegex = function ( type )
 	const pattern = this.patterns[ type ] || null;
 	if ( pattern ) {
 		this.patternRegex = ext.issuetrackerlinks.util.patternToRegex( pattern.url );
+	}
+};
+
+ext.issuetrackerlinks.droplet.Form.prototype.updateLinkPreview = function ( url ) {
+	const type = this.innerForm ? this.innerForm.getItem( 'type' ).getValue() : '';
+	const pattern = type ? ( this.patterns[ type ] || null ) : null;
+	if ( url && pattern && this.patternRegex && this.patternRegex.test( url ) ) {
+		const params = ext.issuetrackerlinks.util.extractUrlParams( pattern.url, url );
+		let label = url;
+		if ( params && pattern[ 'display-mask' ] ) {
+			label = pattern[ 'display-mask' ].replace(
+				/\{(\w[\w-]*)\}/g,
+				( _match, key ) => params[ key ] || ''
+			);
+		}
+		this.$linkPreview
+			.attr( 'href', url )
+			.text( label )
+			.show();
+	} else {
+		this.$linkPreview.hide();
 	}
 };
