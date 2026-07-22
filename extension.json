@@ -78,6 +78,9 @@
 				},
 				"ui/ext.issuetrackerlinks.droplet.form.js"
 			],
+			"styles": [
+				"stylesheets/inspector-styles.css"
+			],
 			"messages": [
 				"issuetrackerlinks-field-url",
 				"issuetrackerlinks-type-label-github",
