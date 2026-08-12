@@ -1,0 +1,40 @@
+[
+	{
+		"name": "issuetrackerlinks_issues",
+		"comment": "Storage of issue tracker links set on page",
+		"columns": [
+			{
+				"name": "itli_page_title",
+				"type": "string",
+				"options": { "length": 255, "notnull": true }
+			},
+			{
+				"name": "itli_page_namespace",
+				"type": "string",
+				"options": { "length": 255, "notnull": true }
+			},
+			{
+				"name": "itli_wiki_id",
+				"type": "string",
+				"options": { "length": 255, "notnull": true }
+			},
+			{
+				"name": "itli_type",
+				"type": "string",
+				"options": { "length": 255, "notnull": true }
+			},
+			{
+				"name": "itli_data_provider",
+				"type": "string",
+				"options": { "length": 255, "notnull": true }
+			},
+			{
+				"name": "itli_params",
+				"type": "blob",
+				"options": { "notnull": false }
+			}
+		],
+		"pk": [],
+		"indexes": []
+	}
+]

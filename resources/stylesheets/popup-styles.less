@@ -1,0 +1,90 @@
+.issuetrackerlinks-popup-content {
+	.issuetrackerlinks-popup-header {
+		display: flex;
+		align-items: center;
+
+		.issuetrackerlinks-issue-entity-title {
+			font-size: 16px; /* stylelint-disable-line declaration-property-unit-disallowed-list */
+			font-weight: bold;
+			flex: 1;
+		}
+	}
+
+	.issuetrackerlinks-issue-entity-field {
+		label {
+			font-size: 12px; /* stylelint-disable-line declaration-property-unit-disallowed-list */
+		}
+
+		&:not( :first-child ) {
+			margin-top: 0;
+		}
+
+		.oo-ui-fieldLayout-header {
+			> label {
+				display: inline !important; /* stylelint-disable-line declaration-no-important */
+				margin-left: 4px;
+			}
+
+			.oo-ui-iconWidget {
+				display: inline-block;
+				background-size: 14px;
+			}
+		}
+
+		.oo-ui-fieldLayout-field {
+			.issuetrackerlinks-colored-badge {
+				width: 10px;
+				height: 10px;
+				border-radius: 10px;
+				display: inline-block;
+				margin-right: 4px;
+				vertical-align: middle;
+			}
+		}
+	}
+
+	.issuetrackerlinks-issue-entity-description-panel {
+		border-top: 1px solid #ccc;
+		margin-top: 5px;
+		padding-top: 5px;
+		width: 100%;
+
+		.issuetrackerlinks-issue-entity-description-header {
+			font-size: 14px;/* stylelint-disable-line declaration-property-unit-disallowed-list */
+			font-weight: bold;
+			margin-bottom: 12px;
+			white-space: nowrap;
+		}
+
+		.issuetrackerlinks-issue-entity-description {
+			font-size: 12px; /* stylelint-disable-line declaration-property-unit-disallowed-list */
+			/* last-resort */
+			max-height: 400px;
+			overflow-y: auto;
+		}
+	}
+
+	.issuetrackerlinks-issue-entity-panel {
+		&.inline {
+			width: 48%;
+		}
+	}
+}
+
+.mw-issue-link-popup {
+	&.mw-issue-link-issue-closed a {
+		text-decoration: line-through;
+	}
+
+	&.mw-issue-link-issue-not-found a {
+		color: #dc3545;
+	}
+
+	.issuetrackerlinks-popup-authorization-panel {
+		text-align: center;
+
+		> span {
+			display: block;
+		}
+	}
+}

@@ -1,0 +1,16 @@
+.issuetrackerlinks-config-data-provider-details-close-button {
+	justify-content: flex-end;
+}
+
+.issuetrackerlinks-config-data-provider-redirect-notice {
+	margin-top: 1em;
+}
+
+.issuetrackerlinks-config-data-provider-details-view {
+	margin-top: 1em;
+}
+
+.issuetrackerlinks-config-data-provider-details-view label {
+	width: 100%;
+	word-break: break-all;
+}

@@ -1,20 +1,20 @@
-ve.ui.commandRegistry.register(
-	new ve.ui.Command(
-		'githubCommand', 'window', 'open',
-		{ args: [ 'issueInspector', { commandParams: { type: 'github' } } ] }
-	)
-);
+const patterns = require( './patterns.json' );
 
-ve.ui.commandRegistry.register(
-	new ve.ui.Command(
-		'gitlabCommand', 'window', 'open',
-		{ args: [ 'issueInspector', { commandParams: { type: 'gitlab' } } ] }
-	)
-);
-
-ve.ui.commandRegistry.register(
-	new ve.ui.Command(
-		'jiraCommand', 'window', 'open',
-		{ args: [ 'issueInspector', { commandParams: { type: 'jira' } } ] }
-	)
-);
+for ( const key in patterns ) {
+	ve.ui.commandRegistry.register(
+		new ve.ui.Command(
+			key + 'Command', 'window', 'open',
+			{
+				args: [
+					'issueInspector',
+					{
+						commandParams: {
+							type: key,
+							dataProvider: patterns[ key ][ 'data-provider' ] || ''
+						}
+					}
+				]
+			}
+		)
+	);
+}

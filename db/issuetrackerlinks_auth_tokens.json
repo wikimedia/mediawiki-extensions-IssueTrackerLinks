@@ -1,0 +1,29 @@
+[
+	{
+		"name": "issuetrackerlinks_auth_tokens",
+		"comment": "Storage of obtained AccessTokens for entity info providers",
+		"columns": [
+			{
+				"name": "itlat_user",
+				"type": "integer",
+				"options": { "unsigned": true, "notnull": true }
+			},
+			{
+				"name": "itlat_provider",
+				"type": "string",
+				"options": { "length": 255, "notnull": true }
+			},
+			{
+				"name": "itlat_auth_data",
+				"type": "blob",
+				"options": {}
+			}
+		],
+		"pk": [],
+		"indexes": [ {
+			"name": "issuetrackerlinks_auth_tokens_user_provider",
+			"columns": [ "itlat_user", "itlat_provider" ],
+			"unique": true
+		} ]
+	}
+]

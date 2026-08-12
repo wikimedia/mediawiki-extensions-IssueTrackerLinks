@@ -1,0 +1,47 @@
+<?php
+
+namespace MediaWiki\Extension\IssueTrackerLinks\Rest;
+
+use MediaWiki\Context\RequestContext;
+use MediaWiki\Extension\IssueTrackerLinks\Data\DataProviders\Store;
+use MediaWiki\Extension\IssueTrackerLinks\DataProviderStore;
+use MediaWiki\HookContainer\HookContainer;
+use MediaWiki\Permissions\PermissionManager;
+use MediaWiki\Rest\HttpException;
+use MediaWiki\Rest\Response;
+use MWStake\MediaWiki\Component\CommonWebAPIs\Rest\QueryStore;
+use MWStake\MediaWiki\Component\DataStore\IStore;
+
+class DataProviderQueryStore extends QueryStore {
+	use AdminAction;
+
+	/**
+	 * @param HookContainer $hookContainer
+	 * @param DataProviderStore $dataProviderStore
+	 * @param PermissionManager $permissionManager
+	 */
+	public function __construct(
+		HookContainer $hookContainer,
+		private readonly DataProviderStore $dataProviderStore,
+		PermissionManager $permissionManager
+	) {
+		parent::__construct( $hookContainer );
+		$this->initPermissionsChecker( $permissionManager );
+	}
+
+	/**
+	 * @return Response|mixed
+	 * @throws HttpException
+	 */
+	public function execute() {
+		$this->assertIsAdmin( RequestContext::getMain()->getAuthority() );
+		return parent::execute();
+	}
+
+	/**
+	 * @return IStore
+	 */
+	protected function getStore(): IStore {
+		return new Store( $this->dataProviderStore );
+	}
+}

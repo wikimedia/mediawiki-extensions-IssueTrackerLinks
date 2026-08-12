@@ -13,6 +13,7 @@ ext.issuetrackerlinks.ve.PasteHandler.static.name = 'issueTrackerLink';
 ext.issuetrackerlinks.ve.PasteHandler.static.types = [ 'text/plain' ];
 ext.issuetrackerlinks.ve.PasteHandler.static.handlesPaste = true;
 ext.issuetrackerlinks.ve.PasteHandler.static.matchFunction = function ( item ) {
+
 	const patterns = require( './../patterns.json' );
 	for ( const key in patterns ) {
 		const regex = ext.issuetrackerlinks.util.patternToRegex( patterns[ key ].url );

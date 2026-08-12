@@ -11,34 +11,41 @@
 		"MediaWiki": ">= 1.43.0",
 		"extensions": {
 			"VisualEditor": "*",
-			"VisualEditorPlus": "*"
+			"VisualEditorPlus": "*",
+			"OOJSPlus": ">= 3.0.0"
 		}
 	},
 	"attributes": {
 		"ContentDroplets": {
 			"Droplets": {
-				"github": {
-					"class": "\\MediaWiki\\Extension\\IssueTrackerLinks\\ContentDroplets\\GithubDroplet"
-				},
-				"gitlab": {
-					"class": "\\MediaWiki\\Extension\\IssueTrackerLinks\\ContentDroplets\\GitlabDroplet"
-				},
-				"jira": {
-					"class": "\\MediaWiki\\Extension\\IssueTrackerLinks\\ContentDroplets\\JiraDroplet"
-				}
 			}
 		},
 		"VisualEditor": {
-			"PluginModules": [ "ext.issuetrackerlinks.ve.paste", "ext.issuetrackerlinks.ve.sequence" ]
+			"PluginModules": [ "ext.issuetrackerlinks.ve.paste", "ext.issuetrackerlinks.ve.sequence", "ext.issuetrackerlinks.commands" ]
 		},
 		"BlueSpiceSMWConnector": {
 			"ExtraPropertyRegistry": {
 				"issue-tracker-links": "MediaWiki\\Extension\\IssueTrackerLinks\\Property\\IssueTrackerLinksValueProvider::factory"
 			}
+		},
+		"IssueTrackerLinks": {
+			"DataProviderBackend": {
+				"openproject": {
+					"class": "\\MediaWiki\\Extension\\IssueTrackerLinks\\DataProviderBackend\\OpenProject",
+					"services": [ "HttpRequestFactory" ]
+				},
+				"github": {
+					"class": "\\MediaWiki\\Extension\\IssueTrackerLinks\\DataProviderBackend\\GitHub",
+					"services": [ "HttpRequestFactory" ]
+				}
+			}
 		}
 	},
 	"MessagesDirs": {
 		"IssueTrackerLinks": "i18n"
+	},
+	"ExtensionMessagesFiles": {
+		"IssueTrackerLinksAlias": "languages/Special.alias.php"
 	},
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\IssueTrackerLinks\\": "src/"
@@ -50,7 +57,11 @@
 			]
 		},
 		"ext.issuetrackerlinks.commands": {
-			"scripts": [
+			"packageFiles": [
+				{
+					"name": "ui/patterns.json",
+					"callback": "MediaWiki\\Extension\\IssueTrackerLinks\\PatternConfig::getClientConfig"
+				},
 				"ui/ext.issuetrackerlinks.commands.js"
 			],
 			"styles": [
@@ -76,19 +87,25 @@
 					"name": "patterns.json",
 					"callback": "MediaWiki\\Extension\\IssueTrackerLinks\\PatternConfig::getClientConfig"
 				},
-				"ui/ext.issuetrackerlinks.droplet.form.js"
+				"ui/ext.issuetrackerlinks.droplet.form.js",
+				"ui/ext.issuetrackerlinks.droplet.lookup.widget.js"
 			],
 			"styles": [
 				"stylesheets/inspector-styles.css"
 			],
 			"messages": [
 				"issuetrackerlinks-field-url",
+				"issuetrackerlinks-inspector-search-error",
+				"issuetrackerlinks-inspector-invalid-search-result",
 				"issuetrackerlinks-type-label-github",
 				"issuetrackerlinks-type-label-gitlab",
 				"issuetrackerlinks-type-label-jira",
-				"issuetrackerlinks-inspector-header-title"
+				"issuetrackerlinks-inspector-header-title",
+				"issuetrackerlinks-inspector-search-label",
+				"issuetrackerlinks-authorize-button"
 			],
 			"dependencies": [
+				"oojs-ui-widgets",
 				"ext.forms.standalone",
 				"ext.issuetrackerlinks.bootstrap"
 			]
@@ -123,6 +140,92 @@
 				"ext.issuetrackerlinks.bootstrap",
 				"ext.visualEditor.core"
 			]
+		},
+		"ext.issuetrackerlinks.popupIssue": {
+			"packageFiles": [
+				"ui/PopupContent.js"
+			],
+			"styles": [
+				"stylesheets/popup-styles.less"
+			],
+			"messages": [
+				"issuetrackerlinks-opener-label",
+				"issuetrackerlinks-ui-entity-not-found",
+				"issuetrackerlinks-ui-entity-not-allowed",
+				"issuetrackerlinks-authorize-button"
+			],
+			"dependencies": [
+				"oojs-ui"
+			]
+		},
+		"ext.issuetrackerlinks.special": {
+			"packageFiles": [
+				"ext.issuetrackerlinks.special.bootstrap.js",
+				"ui/special/api.js",
+				"ui/special/dialog/EditLinkDialog.js",
+				"ui/special/dialog/CreateDataProviderDialog.js",
+				"ui/special/dialog/DataProviderDetailsDialog.js",
+				"ui/special/IssueLinksGrid.js",
+				"ui/special/DataProvidersGrid.js",
+				"ui/special/ConfigPanel.js"
+			],
+			"dependencies": [
+				"oojs-ui",
+				"ext.oOJSPlus.data",
+				"ext.oOJSPlus.managerPanel",
+				"ext.forms.standalone"
+			],
+			"styles": [
+				"ui/special/styles.css"
+			],
+			"messages": [
+				"issuetrackerlinks-config-tab-label-links",
+				"issuetrackerlinks-config-tab-label-data-providers",
+				"issuetrackerlinks-config-grid-header-key",
+				"issuetrackerlinks-config-grid-header-url",
+				"issuetrackerlinks-config-grid-header-display-mask",
+				"issuetrackerlinks-config-grid-header-data-provider",
+				"issuetrackerlinks-config-provider-grid-header-name",
+				"issuetrackerlinks-config-provider-grid-header-type",
+				"issuetrackerlinks-config-grid-action-edit",
+				"issuetrackerlinks-config-grid-action-delete",
+				"issuetrackerlinks-config-provider-grid-action-info",
+				"issuetrackerlinks-config-provider-grid-action-delete",
+				"issuetrackerlinks-config-grid-action-not-implemented",
+				"issuetrackerlinks-config-dialog-action-save",
+				"issuetrackerlinks-config-dialog-action-cancel",
+				"issuetrackerlinks-config-dialog-action-delete",
+				"issuetrackerlinks-config-dialog-title-delete",
+				"issuetrackerlinks-config-dialog-confirm-delete-item",
+				"issuetrackerlinks-config-dialog-confirm-delete-generic",
+				"issuetrackerlinks-config-dialog-placeholder-edit",
+				"issuetrackerlinks-config-dialog-placeholder-delete",
+				"issuetrackerlinks-config-entity-issue-link",
+				"issuetrackerlinks-config-entity-data-provider",
+				"issuetrackerlinks-config-dialog-title-add-data-provider",
+				"issuetrackerlinks-config-data-provider-picker-loading",
+				"issuetrackerlinks-config-data-provider-picker-empty",
+				"issuetrackerlinks-config-data-provider-picker-load-failed",
+				"issuetrackerlinks-config-dialog-link-title-edit",
+				"issuetrackerlinks-config-dialog-link-title-add",
+				"issuetrackerlinks-config-remove-link-confirm-header",
+				"issuetrackerlinks-config-remove-link-confirm",
+				"issuetrackerlinks-config-remove-data-provider-confirm",
+				"issuetrackerlinks-config-remove-data-provider-confirm-header",
+				"issuetrackerlinks-config-dialog-redirect-uri-message",
+				"issuetrackerlinks-config-dialog-data-provider-details-title",
+				"issuetrackerlinks-config-dialog-action-close",
+				"issuetrackerlinks-config-data-provider-details-loading",
+				"issuetrackerlinks-config-data-provider-details-error",
+				"issuetrackerlinks-config-data-provider-picker-none",
+				"issuetrackerlinks-config-grid-header-name",
+				"issuetrackerlinks-config-grid-header-type",
+				"issuetrackerlinks-config-error-save-link",
+				"issuetrackerlinks-config-error-delete-link",
+				"issuetrackerlinks-config-dialog-action-add",
+				"issuetrackerlinks-config-provider-grid-action-add-dataprovider",
+				"issuetrackerlinks-config-grid-action-add-issue-link"
+			]
 		}
 	},
 	"ResourceFileModulePaths": {
@@ -132,7 +235,10 @@
 	"Hooks": {
 		"MWStakeGenericTagHandlerInitTags": "registerTags",
 		"LoadExtensionSchemaUpdates": "runDatabaseUpdates",
-		"BeforePageDisplay": [ "checkConfigValidity", "registerTags" ]
+		"BeforePageDisplay": [ "checkConfigValidity", "registerTags" ],
+		"PageSaveComplete": "storeIssueTrackerLinks",
+		"PageDeleteComplete": "storeIssueTrackerLinks",
+		"ContentDropletsGetDroplets": "registerDroplets"
 	},
 	"HookHandlers": {
 		"registerTags": {
@@ -144,11 +250,89 @@
 		"checkConfigValidity": {
 			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Hook\\CheckConfigValidity",
 			"services": [ "IssueTrackerLinks.PatternConfig" ]
+		},
+		"storeIssueTrackerLinks": {
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\LinkRegistry",
+			"services": [ "DBLoadBalancer", "IssueTrackerLinks.DataProviderStore", "PermissionManager", "TitleFactory" ]
+		},
+		"registerDroplets": {
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Hook\\RegisterDroplets",
+			"services": [ "IssueTrackerLinks.PatternConfig" ]
 		}
 	},
 	"ServiceWiringFiles": [
 		"includes/ServiceWiring.php"
 	],
-	"RestRoutes": [],
+	"SpecialPages": {
+		"IssueAuth": {
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Special\\IssueAuth",
+			"services": [ "IssueTrackerLinks.DataProviderStore", "IssueTrackerLinks._Logger" ]
+		},
+		"IssueTrackerLinksConfig": {
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Special\\IssueTrackerLinksConfig"
+		}
+	},
+	"RestRoutes": [
+		{
+			"method": "POST",
+			"path": "/issuetrackerlinks/v0/get-issue",
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Rest\\GetIssueHandler",
+			"services": [ "IssueTrackerLinks.DataProviderStore" ]
+		},
+		{
+			"method": "GET",
+			"path": "/issuetrackerlinks/v0/issue-pages/{selector_type}/{selector_id}",
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Rest\\IssuePagesHandler",
+			"services": [ "IssueTrackerLinks.LinkRegistry" ]
+		},
+		{
+			"method": "GET",
+			"path": "/issuetrackerlinks/v0/search-issues/{provider}",
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Rest\\SearchIssueHandler",
+			"services": [ "IssueTrackerLinks.DataProviderStore" ]
+		},
+		{
+			"method": "GET",
+			"path": "/issuetrackerlinks/v0/config/issuelinks",
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Rest\\IssueLinksConfigStore",
+			"services": [ "HookContainer", "IssueTrackerLinks.PatternConfig", "PermissionManager" ]
+		},
+		{
+			"method": "GET",
+			"path": "/issuetrackerlinks/v0/config/dataproviders",
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Rest\\DataProviderQueryStore",
+			"services": [ "HookContainer", "IssueTrackerLinks.DataProviderStore", "PermissionManager" ]
+		},
+		{
+			"method": "POST",
+			"path": "/issuetrackerlinks/v0/config/link-editor",
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Rest\\LinkConfigEditorHandler",
+			"services": [ "IssueTrackerLinks.ConfigJsonMutator", "PermissionManager" ]
+		},
+		{
+			"method": "POST",
+			"path": "/issuetrackerlinks/v0/config/data-provider-editor",
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Rest\\DataProviderConfigEditorHandler",
+			"services": [ "IssueTrackerLinks.DataProviderStore", "PermissionManager" ]
+		},
+		{
+			"method": "GET",
+			"path": "/issuetrackerlinks/v0/config/data-provider/{name}",
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Rest\\GetDataProviderData",
+			"services": [ "IssueTrackerLinks.DataProviderStore", "IssueTrackerLinks.RedirectUriProvider", "PermissionManager" ]
+		},
+		{
+			"method": "GET",
+			"path": "/issuetrackerlinks/v0/config/data-provider-backend",
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Rest\\ListDataProviderBackends",
+			"services": [ "IssueTrackerLinks.DataProviderStore", "PermissionManager" ]
+		},
+		{
+			"method": "GET",
+			"path": "/issuetrackerlinks/v0/config/data-provider-backend/{type}",
+			"class": "MediaWiki\\Extension\\IssueTrackerLinks\\Rest\\GetProviderBackendData",
+			"services": [ "IssueTrackerLinks.DataProviderStore", "IssueTrackerLinks.RedirectUriProvider", "PermissionManager" ]
+		}
+	],
 	"manifest_version": 2
 }

@@ -1,0 +1,30 @@
+[
+	{
+		"name": "issuetrackerlinks_provider_config",
+		"comment": "Configuration of IssueTrackerLinks entity info providers",
+		"columns": [
+			{
+				"name": "itlpc_id",
+				"type": "string",
+				"options": { "length": 32, "notnull": true }
+			},
+			{
+				"name": "itlpc_name",
+				"type": "string",
+				"options": { "length": 255, "notnull": true }
+			},
+			{
+				"name": "itlpc_type",
+				"type": "string",
+				"options": { "length": 255, "notnull": true }
+			},
+			{
+				"name": "itlpc_data",
+				"type": "blob",
+				"options": {}
+			}
+		],
+		"pk": [ "itlpc_id", "itlpc_name" ],
+		"indexes": []
+	}
+]

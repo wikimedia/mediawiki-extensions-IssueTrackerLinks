@@ -76,3 +76,51 @@ ext.issuetrackerlinks = {
 		}
 	}
 };
+
+$( () => {
+	$( '.mw-issue-link-popup' ).each( async ( i, el ) => {
+		const $el = $( el );
+		const data = $el.data();
+
+		await mw.loader.using( [ 'ext.issuetrackerlinks.popupIssue' ] );
+		const PopupContentClass = mw.loader.require( 'ext.issuetrackerlinks.popupIssue' );
+
+		const popupContent = new PopupContentClass( data );
+		// Convert this element to OO.ui.PopupButtonWidget()
+		const popupButton = new OO.ui.PopupButtonWidget( { // eslint-disable-line mediawiki/class-doc
+			label: data.label,
+			classes: [ 'mw-issue-link', 'mw-issue-type-' + data.type, 'mw-issue-link-popup' ],
+			popup: {
+				// Unfortunately, with popups, only predefined fixed width is supported...
+				width: 600,
+				padded: true,
+				autoClose: 'outside',
+				$content: popupContent.$element
+			}
+		} );
+
+		// Update link tag
+		popupContent.connect( popupButton, {
+			loaded: ( closingData, isClosed ) => {
+				if ( isClosed ) {
+					popupButton.$element.addClass( 'mw-issue-link-issue-closed' );
+				}
+			},
+			notFound: () => {
+				popupButton.$element.addClass( 'mw-issue-link-issue-not-found' );
+			}
+		} );
+
+		// If couldn't fetch before, retry on opening
+		popupButton.connect( popupContent, {
+			toggle: ( visible ) => {
+				if ( visible && !this.fetched ) {
+					this.fetch();
+				}
+			}
+		} );
+
+		// Replace original element
+		$( el ).replaceWith( popupButton.$element );
+	} );
+} );
