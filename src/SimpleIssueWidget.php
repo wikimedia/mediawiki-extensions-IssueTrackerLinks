@@ -4,7 +4,7 @@ namespace MediaWiki\Extension\IssueTrackerLinks;
 
 use OOUI\ButtonWidget;
 
-class IssueWidget extends ButtonWidget {
+class SimpleIssueWidget extends ButtonWidget {
 
 	/**
 	 * @param string $type
@@ -16,12 +16,8 @@ class IssueWidget extends ButtonWidget {
 		parent::__construct( [
 			'label' => $label,
 			'href' => $url,
-			'classes' => [ 'mw-issue-link', 'mw-issue-type-' . $type ],
-			'data' => [
-				'type' => $type,
-				'params' => json_encode( $params ),
-			]
+			'classes' => [ 'mw-issue-link', 'mw-issue-type-' . $type ]
 		] );
-		$this->content[0]->setAttributes( [ 'style' => 'padding:0 0 0 5px;background-color:none;min-height:30px' ] );
+		$this->content[0]->setAttributes( [ 'style' => 'padding:0 0 0 5px;min-height:30px' ] );
 	}
 }

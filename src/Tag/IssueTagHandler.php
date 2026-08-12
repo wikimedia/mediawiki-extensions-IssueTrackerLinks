@@ -2,8 +2,10 @@
 
 namespace MediaWiki\Extension\IssueTrackerLinks\Tag;
 
-use MediaWiki\Extension\IssueTrackerLinks\IssueWidget;
+use MediaWiki\Extension\IssueTrackerLinks\DataProviderStore;
 use MediaWiki\Extension\IssueTrackerLinks\PatternConfig;
+use MediaWiki\Extension\IssueTrackerLinks\PopupIssueWidget;
+use MediaWiki\Extension\IssueTrackerLinks\SimpleIssueWidget;
 use MediaWiki\Message\Message;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Parser\Parser;
@@ -16,9 +18,11 @@ class IssueTagHandler implements ITagHandler {
 
 	/**
 	 * @param PatternConfig $patternConfig
+	 * @param DataProviderStore $dataProviderStore
 	 */
 	public function __construct(
-		private readonly PatternConfig $patternConfig
+		private readonly PatternConfig $patternConfig,
+		private readonly DataProviderStore $dataProviderStore
 	) {
 	}
 
@@ -43,8 +47,13 @@ class IssueTagHandler implements ITagHandler {
 		$label = $this->makeLabel( $tagParams, $config );
 		$url = $this->makeUrl( $tagParams, $config );
 		$parser->getOutput()->appendExtensionData( 'IssueTrackerLinks.tags', $url );
+		$this->updateExtensionData( $parser, $params['type'], $tagParams, $config );
 		$parser->getOutput()->addModuleStyles( [ 'ext.issuetrackerlinks.styles' ] );
-		return ( new IssueWidget( $params['type'], $label, $url, $tagParams ) )->toString();
+
+		if ( $this->isSimpleLink( $config ) ) {
+			return ( new SimpleIssueWidget( $params['type'], $label, $url, $tagParams ) )->toString();
+		}
+		return ( new PopupIssueWidget( $params['type'], $label, $url, $tagParams, $config ) )->toString();
 	}
 
 	/**
@@ -60,7 +69,7 @@ class IssueTagHandler implements ITagHandler {
 		// Match all {param}s from mask to available params, and replace. If not found, skip it
 		return preg_replace_callback(
 			'/\{([a-zA-Z0-9_-]+)\}/',
-			fn ( $matches ) => $params[$matches[1]] ?? '',
+			static fn ( $matches ) => $params[$matches[1]] ?? '',
 			$mask
 		);
 	}
@@ -74,7 +83,7 @@ class IssueTagHandler implements ITagHandler {
 		$urlMask = $config['url'];
 		return preg_replace_callback(
 			'/\{([a-zA-Z0-9_-]+)\}/',
-			fn ( $matches ) => $params[$matches[1]] ?? '',
+			static fn ( $matches ) => $params[$matches[1]] ?? '',
 			$urlMask
 		);
 	}
@@ -96,4 +105,31 @@ class IssueTagHandler implements ITagHandler {
 		return $result;
 	}
 
+	/**
+	 * @param array $config
+	 * @return bool
+	 */
+	private function isSimpleLink( array $config ): bool {
+		return !isset( $config['data-provider'] ) || !$this->dataProviderStore->hasProvider( $config['data-provider'] );
+	}
+
+	/**
+	 * @param Parser $parser
+	 * @param string $type
+	 * @param array $params
+	 * @param array $config
+	 * @return void
+	 */
+	private function updateExtensionData( Parser $parser, string $type, array $params, array $config ) {
+		$data = $parser->getOutput()->getExtensionData( 'IssueTrackerLinks.links' );
+		if ( !is_array( $data ) ) {
+			$data = [];
+		}
+		$data[] = [
+			'type' => $type,
+			'params' => $params,
+			'provider' => $config['data-provider'] ?? null,
+		];
+		$parser->getOutput()->setExtensionData( 'IssueTrackerLinks.links', $data );
+	}
 }

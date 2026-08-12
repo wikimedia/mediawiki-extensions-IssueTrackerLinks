@@ -62,7 +62,10 @@ class IssueTag extends GenericTag {
 	 */
 	public function getHandler( MediaWikiServices $services ): ITagHandler {
 		// @phan-suppress-previous-line PhanUndeclaredTypeReturnType
-		return new IssueTagHandler( $services->getService( 'IssueTrackerLinks.PatternConfig' ) );
+		return new IssueTagHandler(
+			patternConfig: $services->getService( 'IssueTrackerLinks.PatternConfig' ),
+			dataProviderStore: $services->getService( 'IssueTrackerLinks.DataProviderStore' ),
+		);
 	}
 
 	/**
