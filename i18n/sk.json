@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wizzard"
+		]
+	},
+	"issuetrackerlinks-desc": "Odkazy na systémy na sledovanie chýb",
+	"issuetrackerlinks-inspector-header-title": "Odkaz na hlásenie v $1",
+	"issuetrackerlinks-invalid-config-warning": "Upozornenie: Neplatná konfigurácia rozšírenia IssueTrackerLinks.\n* Konfiguračné pole musí obsahovať kľúče, ktoré sú jedinečnými ID typov odkazov na sledovače\n* Každá konfigurácia musí obsahovať kľúč <code>url</code> s platnou URL obsahujúcou zástupný výraz <code>{param-name}</code> pre premenlivé časti URL",
+	"issuetrackerlinks-unknown-type": "Neznámy typ sledovača hlásení „$1“. Skontrolujte svoju konfiguráciu.",
+	"issuetrackerlinks-generic-droplet-desc": "Vložiť odkaz na sledovač hlásení",
+	"issuetrackerlinks-field-url": "URL hlásenia",
+	"issuetrackerlinks-inspector-title": "Odkaz na hlásenie",
+	"issuetrackerlinks-sesp-alias": "Odkazy na sledovač hlásení",
+	"issuetrackerlinks-sesp-desc": "Odkazy na hlásenia na tejto stránke"
+}
