@@ -94,7 +94,7 @@ class PatternConfig {
 	private function load() {
 		if ( $this->patterns === null ) {
 			$data = $this->getRawData();
-			if ( !$this->validateData( $data ) ) {
+			if ( !$data || !$this->validateData( $data ) ) {
 				$this->logger->error(
 					'IssueTrackerLinks: Config page contains invalid data structure: ' . static::CONFIG_PAGE
 				);
