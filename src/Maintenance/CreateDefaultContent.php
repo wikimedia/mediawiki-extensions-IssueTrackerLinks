@@ -8,6 +8,8 @@ use MediaWiki\Maintenance\LoggedUpdateMaintenance;
 use MediaWiki\Revision\SlotRecord;
 use MediaWiki\User\User;
 
+require_once __DIR__ . '/../../../../maintenance/Maintenance.php';
+
 class CreateDefaultContent extends LoggedUpdateMaintenance {
 
 	/**
@@ -51,3 +53,6 @@ class CreateDefaultContent extends LoggedUpdateMaintenance {
 		return 'issuetrackerslinks-createdefaultcontent';
 	}
 }
+
+$maintClass = CreateDefaultContent::class;
+require_once RUN_MAINTENANCE_IF_MAIN;
