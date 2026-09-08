@@ -53,7 +53,7 @@ class IssueTag extends GenericTag {
 	 * @return string[]|null
 	 */
 	public function getResourceLoaderModules(): ?array {
-		return [ 'ext.issuetrackerlinks.definition' ];
+		return [ 'ext.issuetrackerlinks.definition', 'ext.issuetrackerlinks.styles' ];
 	}
 
 	/**
