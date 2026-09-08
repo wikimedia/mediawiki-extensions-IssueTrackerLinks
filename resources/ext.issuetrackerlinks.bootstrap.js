@@ -70,9 +70,14 @@ ext.issuetrackerlinks = {
 			}
 			return params;
 		},
-		makeSequenceRegex: function ( pattern ) {
-			// Replace all {var} variables with `(?<var>[A-Za-z0-9_-]+)`
-			return pattern.replace( /\{(\w+)\}/g, '(?<$1>[A-Za-z0-9_-]+)' );
+		makeSequenceRegex: function ( pattern, params ) {
+			params = params || {};
+			// Replace all {var} variables with a named capture group. The pattern for each
+			// variable can be set in the config, under "sequence-params". Variables without
+			// an explicit pattern fall back to digits only
+			const body = pattern.replace( /\{(\w+)\}/g, ( placeholder, name ) => '(?<' + name + '>' + ( params[ name ] || '[0-9]+' ) + ')' );
+			// Do not match in the middle of a word, the sequence must start at a word boundary
+			return '(?<![A-Za-z0-9_-])' + body;
 		}
 	}
 };

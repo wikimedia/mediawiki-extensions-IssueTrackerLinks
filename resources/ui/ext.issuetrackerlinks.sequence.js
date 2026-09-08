@@ -1,5 +1,6 @@
-ext.issuetrackerlinks.ve.Sequence = function ( sequencePattern, key ) {
+ext.issuetrackerlinks.ve.Sequence = function ( sequencePattern, key, sequenceParams ) {
 	this.key = key;
+	this.sequenceParams = sequenceParams || {};
 	ext.issuetrackerlinks.ve.Sequence.super.apply( this, [
 		'insert' + key + 'Sequence',
 		'insert' + key + 'Command',
@@ -16,7 +17,9 @@ OO.inheritClass( ext.issuetrackerlinks.ve.Sequence, ve.ui.Sequence );
 ext.issuetrackerlinks.ve.Sequence.prototype.execute = function ( surface, range ) {
 	// Get text on range
 	const text = surface.getModel().getLinearFragment( range ).getText();
-	const matches = text.match( new RegExp( ext.issuetrackerlinks.util.makeSequenceRegex( this.data ) ) );
+	const matches = text.match( new RegExp(
+		ext.issuetrackerlinks.util.makeSequenceRegex( this.data, this.sequenceParams )
+	) );
 	if ( !matches ) {
 		return;
 	}
@@ -50,8 +53,9 @@ ext.issuetrackerlinks.ve.Sequence.prototype.execute = function ( surface, range 
 };
 
 ext.issuetrackerlinks.ve.Sequence.prototype.match = function ( data, offset, plaintext ) {
-	const sequenceRegexSpace =
-		new RegExp( ext.issuetrackerlinks.util.makeSequenceRegex( this.data ) + '\\s' );
+	const sequenceRegexSpace = new RegExp(
+		ext.issuetrackerlinks.util.makeSequenceRegex( this.data, this.sequenceParams ) + '\\s'
+	);
 	const i = plaintext.search( sequenceRegexSpace );
 	if ( i >= 0 ) {
 		return new ve.Range( offset - plaintext.length + i, offset );
@@ -75,5 +79,7 @@ for ( const key in patterns ) {
 		console.warn( 'Skipped sequence for ' + key + ' as it contains only variables.', sequence ); // eslint-disable-line no-console
 		continue;
 	}
-	ve.ui.sequenceRegistry.register( new ext.issuetrackerlinks.ve.Sequence( sequence, key ) );
+	ve.ui.sequenceRegistry.register( new ext.issuetrackerlinks.ve.Sequence(
+		sequence, key, patterns[ key ][ 'sequence-params' ] || {}
+	) );
 }
