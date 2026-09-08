@@ -18,6 +18,11 @@ mask here. Eg. if mask is defined as `GH{id}`, then any `GH123` sequence will be
 or `GH:{repo},{id}` for `GH:example-repo,123`, where `repo=example-repo` and `id=123`. 
 Note that if the URL mask contains more variables than present in sequence, that will lead to broken links.
 Recommended is to use sequences only for URLs with one variable, eg. issue IDs.
+- `sequence-params` - optional - object setting what each variable of the `sequence` may match, as a map of
+variable name to a regular expression. Variables not listed here match digits only, `[0-9]+`, so a sequence of
+`ERM{id}` converts `ERM123` but leaves `ERM-based` alone. Set this if a tracker uses non-numeric ids, eg.
+`"sequence-params": { "id": "[A-Z]+-[0-9]+" }`, or to restrict ids further, eg. `{ "id": "[0-9]{1,6}" }`.
+Regardless of this setting, a sequence is never matched in the middle of a word.
 
 # Data providers
 
