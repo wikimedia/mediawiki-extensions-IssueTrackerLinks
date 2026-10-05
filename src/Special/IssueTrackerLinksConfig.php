@@ -8,7 +8,12 @@ use OOJSPlus\Special\OOJSGridSpecialPage;
 class IssueTrackerLinksConfig extends OOJSGridSpecialPage {
 
 	public function __construct() {
-		parent::__construct( 'IssueTrackerLinksConfig', 'wikiadmin' );
+		parent::__construct( 'IssueTrackerLinksConfig' );
+	}
+
+	/** @inheritDoc */
+	public function getRestriction(): string {
+		return 'wikiadmin';
 	}
 
 	/**
