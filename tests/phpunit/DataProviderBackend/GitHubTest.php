@@ -142,7 +142,6 @@ class GitHubTest extends TestCase {
 
 	private function invokeValidateEntityResponse( GitHub $backend, array $payload ): void {
 		$method = new ReflectionMethod( GitHub::class, 'validateEntityResponse' );
-		$method->setAccessible( true );
 		$method->invoke( $backend, $payload );
 	}
 }
