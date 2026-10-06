@@ -1,10 +1,16 @@
 {
 	"@metadata": {
 		"authors": [
-			"Siebrand"
+			"Siebrand",
+			"Mainframe98"
 		]
 	},
 	"issuetrackerlinks-desc": "Koppelingen naar ticketsystemen",
+	"issuetrackerlinks-config-tab-label-links": "Koppelingen",
+	"issuetrackerlinks-config-provider-grid-header-name": "Naam",
+	"issuetrackerlinks-config-grid-action-edit": "Bewerking",
+	"issuetrackerlinks-config-dialog-action-save": "Opslaan",
+	"issuetrackerlinks-config-dialog-action-cancel": "Annuleren",
 	"issuetrackerlinks-inspector-header-title": "$1 ticketkoppeling",
 	"issuetrackerlinks-invalid-config-warning": "Waarschuwing: Ongeldige instellingen voor de uitbreiding IssueTrackerLinks.\n* De instellingen-array moet eigenschappen bevatten die unieke ID's zijn van het type trackerkoppelingen\n* Elke instelling moet een <code>url</code>-eigenschap bevatten met een geldige URL die een tijdelijke aanduiding <code>{param-name}</code> bevat voor de variabele onderdelen van de URL",
 	"issuetrackerlinks-unknown-type": "Onbekend type ticketsysteem \"$1\". Controleer uw instellingen.",
@@ -12,5 +18,8 @@
 	"issuetrackerlinks-field-url": "Ticket-url",
 	"issuetrackerlinks-inspector-title": "Ticketkoppeling",
 	"issuetrackerlinks-sesp-alias": "Koppelingen naar ticketsystemen",
-	"issuetrackerlinks-sesp-desc": "Ticketkoppelingen op deze pagina"
+	"issuetrackerlinks-sesp-desc": "Ticketkoppelingen op deze pagina",
+	"issuetrackerlinks-config-grid-header-name": "Naam",
+	"issuetrackerlinks-config-dialog-action-close": "Sluiten",
+	"issuetrackerlinks-issue-entity-description": "Beschrijving"
 }
