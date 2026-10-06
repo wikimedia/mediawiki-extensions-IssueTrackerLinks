@@ -167,7 +167,6 @@ class ConfigJsonMutatorTest extends TestCase {
 	 */
 	private function invokePrivate( ConfigJsonMutator $mutator, string $method, array $args ) {
 		$reflectionMethod = new ReflectionMethod( ConfigJsonMutator::class, $method );
-		$reflectionMethod->setAccessible( true );
 		return $reflectionMethod->invokeArgs( $mutator, $args );
 	}
 }

@@ -144,7 +144,6 @@ class OpenProjectTest extends TestCase {
 
 	private function invokeValidateEntityResponse( OpenProject $backend, array $payload ): void {
 		$method = new ReflectionMethod( OpenProject::class, 'validateEntityResponse' );
-		$method->setAccessible( true );
 		$method->invoke( $backend, $payload );
 	}
 }

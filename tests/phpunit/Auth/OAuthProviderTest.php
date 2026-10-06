@@ -123,7 +123,6 @@ class OAuthProviderTest extends TestCase {
 
 	private function invokeCheckResponse( OAuthProvider $provider, Response $response, array $data ): void {
 		$method = new \ReflectionMethod( OAuthProvider::class, 'checkResponse' );
-		$method->setAccessible( true );
 		$method->invoke( $provider, $response, $data );
 	}
 }
