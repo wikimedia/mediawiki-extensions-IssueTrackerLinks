@@ -122,6 +122,10 @@ class LinkRegistry implements PageSaveCompleteHook, PageDeleteCompleteHook {
 	 * @throws \Exception
 	 */
 	private function refreshFromData( PageIdentity $title, array $data ): void {
+		$db = $this->lb->getConnection( DB_PRIMARY );
+		if ( !$db->tableExists( self::ISSUE_TABLE ) ) {
+			return;
+		}
 		$this->clearLinks( $title );
 
 		if ( !$data ) {
@@ -141,7 +145,7 @@ class LinkRegistry implements PageSaveCompleteHook, PageDeleteCompleteHook {
 				'itli_data_provider' => $item['provider'] ?? null,
 			];
 		}
-		$this->lb->getConnection( DB_PRIMARY )->newInsertQueryBuilder()
+		$db->newInsertQueryBuilder()
 			->table( self::ISSUE_TABLE )
 			->rows( $rows )
 			->caller( __METHOD__ )
@@ -153,7 +157,11 @@ class LinkRegistry implements PageSaveCompleteHook, PageDeleteCompleteHook {
 	 * @return void
 	 */
 	private function clearLinks( PageIdentity $title ): void {
-		$this->lb->getConnection( DB_PRIMARY )->newDeleteQueryBuilder()
+		$db = $this->lb->getConnection( DB_PRIMARY );
+		if ( !$db->tableExists( self::ISSUE_TABLE ) ) {
+			return;
+		}
+		$db->newDeleteQueryBuilder()
 			->delete( self::ISSUE_TABLE )
 			->where( [
 				'itli_page_title' => $title->getDBkey(),
