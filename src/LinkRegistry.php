@@ -2,8 +2,8 @@
 
 namespace MediaWiki\Extension\IssueTrackerLinks;
 
-use ManualLogEntry;
 use MediaWiki\Content\TextContent;
+use MediaWiki\Logging\ManualLogEntry;
 use MediaWiki\Page\Hook\PageDeleteCompleteHook;
 use MediaWiki\Page\PageIdentity;
 use MediaWiki\Page\ProperPageIdentity;
