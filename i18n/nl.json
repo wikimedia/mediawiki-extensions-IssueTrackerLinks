@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Mainframe98",
 			"Siebrand"
 		]
 	},
@@ -12,5 +13,13 @@
 	"issuetrackerlinks-field-url": "Ticket-url",
 	"issuetrackerlinks-inspector-title": "Ticketkoppeling",
 	"issuetrackerlinks-sesp-alias": "Koppelingen naar ticketsystemen",
-	"issuetrackerlinks-sesp-desc": "Ticketkoppelingen op deze pagina"
+	"issuetrackerlinks-sesp-desc": "Ticketkoppelingen op deze pagina",
+	"issuetrackerlinks-config-tab-label-links": "Koppelingen",
+	"issuetrackerlinks-config-provider-grid-header-name": "Naam",
+	"issuetrackerlinks-config-grid-action-edit": "Bewerking",
+	"issuetrackerlinks-config-dialog-action-save": "Opslaan",
+	"issuetrackerlinks-config-dialog-action-cancel": "Annuleren",
+	"issuetrackerlinks-config-grid-header-name": "Naam",
+	"issuetrackerlinks-config-dialog-action-close": "Sluiten",
+	"issuetrackerlinks-issue-entity-description": "Beschrijving"
 }

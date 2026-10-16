@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"EmeseToth"
+		]
+	},
+	"issuetrackerlinks-desc": "Hivatkozások a hibajelentő rendszerekhez",
+	"issuetrackerlinks-inspector-header-title": "$1-hibajegyhivatkozás",
+	"issuetrackerlinks-invalid-config-warning": "Figyelmeztetés: Az IssueTrackerLinks kiterjesztés beállítása érvénytelen.\n* A beállítási tömb kulcsainak a hibakövető hivatkozástípusok egyedi azonosítóinak kell lenniük.\n* Minden beállításnak tartalmaznia kell egy <code>url</code> kulcsot egy érvényes URL-lel, amely a változó részek helyén egy <code>{param-name}</code> helyőrzőt tartalmaz.",
+	"issuetrackerlinks-unknown-type": "Ismeretlen hibakövetőtípus: „$1”. Ellenőrizze a beállításokat.",
+	"issuetrackerlinks-generic-droplet-desc": "Hibakövető hivatkozás beszúrása",
+	"issuetrackerlinks-field-url": "Hibajegy URL-címe",
+	"issuetrackerlinks-inspector-title": "Hibajegyhivatkozás",
+	"issuetrackerlinks-sesp-alias": "Hibakövető hivatkozások",
+	"issuetrackerlinks-sesp-desc": "Hibajegyhivatkozások ezen a lapon"
+}
