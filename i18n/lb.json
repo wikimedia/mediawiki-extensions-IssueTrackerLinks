@@ -4,5 +4,6 @@
 			"Volvox"
 		]
 	},
-	"issuetrackerlinks-type-label-jira": "Jira"
+	"issuetrackerlinks-type-label-jira": "Jira",
+	"issuetrackerlinks-config-dialog-action-cancel": "Ofbriechen"
 }
