@@ -5,5 +5,6 @@
 		]
 	},
 	"issuetrackerlinks-type-label-jira": "Jira",
-	"issuetrackerlinks-config-dialog-action-cancel": "Ofbriechen"
+	"issuetrackerlinks-config-dialog-action-cancel": "Ofbriechen",
+	"issuetrackerlinks-detail-project": "Projet"
 }
