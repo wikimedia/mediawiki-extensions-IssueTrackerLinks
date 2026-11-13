@@ -193,8 +193,22 @@ class OpenProject implements OAuthProviderBackend, SearchableBackendProvider, Lo
 	public function search( string $query, Authority $actor, DataProvider $forProvider ): array {
 		$accessToken = $this->getAccessToken( $actor, $forProvider );
 
-		$searchUrl = $this->connectionConfig->get( 'base_url' ) .
-			'/api/v3/work_packages?subject=' . urlencode( $query ) . '&pageSize=20';
+		$params = [
+			'pageSize' => 20,
+		];
+
+		$filter = [];
+		if ( $query ) {
+			$filter[] = [
+				'subject' => [
+					'operator' => '~',
+					'values' => [ $query ]
+				]
+			];
+			$params['filters'] = json_encode( $filter );
+		}
+
+		$searchUrl = wfAppendQuery( $this->connectionConfig->get( 'base_url' ) . '/api/v3/work_packages', $params );
 
 		$request = $this->httpRequestFactory->create( $searchUrl, $this->getHttpRequestOptions(), __METHOD__ );
 		$request->setHeader( 'Authorization', 'Bearer ' . $accessToken->getToken() );

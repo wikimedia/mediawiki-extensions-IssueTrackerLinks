@@ -1,5 +1,6 @@
 ext.issuetrackerlinks.droplet.IssueLookupWidget = function ( config ) {
 	config = config || {};
+	config.allowSuggestionsWhenEmpty = true;
 	this.provider = config.provider || '';
 
 	ext.issuetrackerlinks.droplet.IssueLookupWidget.super.call( this, config );
@@ -17,14 +18,30 @@ ext.issuetrackerlinks.droplet.IssueLookupWidget.prototype.getLookupRequest = fun
 	const query = this.getValue().trim();
 	const deferred = $.Deferred();
 
-	if ( !this.provider || !query ) {
-		return deferred.resolve( [] ).promise();
+	const promise = deferred.promise();
+	// OO.ui.mixin.RequestManager expects a request object with an .abort() method
+	promise.abort = function () {};
+
+	if ( !this.provider ) {
+		deferred.resolve( [] );
+		return promise;
 	}
 
-	const url = mw.util.wikiScript( 'rest' ) + '/issuetrackerlinks/v0/search-issues/' +
-		encodeURIComponent( this.provider ) + '?query=' + encodeURIComponent( query );
+	const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+	if ( controller ) {
+		promise.abort = function () {
+			controller.abort();
+		};
+	}
 
-	fetch( url )
+	let url = mw.util.wikiScript( 'rest' ) + '/issuetrackerlinks/v0/search-issues/' +
+		encodeURIComponent( this.provider );
+
+	if ( query ) {
+		url += '?query=' + encodeURIComponent( query );
+	}
+
+	fetch( url, controller ? { signal: controller.signal } : {} )
 		.then( ( response ) => {
 			if ( !response.ok ) {
 				return response.json().catch( () => ( {} ) ).then( ( errorData ) => {
@@ -48,11 +65,15 @@ ext.issuetrackerlinks.droplet.IssueLookupWidget.prototype.getLookupRequest = fun
 			deferred.resolve( data );
 		} )
 		.catch( ( error ) => {
+			if ( error && error.name === 'AbortError' ) {
+				deferred.reject( error );
+				return;
+			}
 			this.emit( 'searchError', error );
 			deferred.reject( error );
 		} );
 
-	return deferred.promise();
+	return promise;
 };
 
 ext.issuetrackerlinks.droplet.IssueLookupWidget.prototype.getLookupCacheDataFromResponse =

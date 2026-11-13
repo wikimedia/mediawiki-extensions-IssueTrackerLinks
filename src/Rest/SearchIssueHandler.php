@@ -40,7 +40,7 @@ class SearchIssueHandler extends SimpleHandler {
 		}
 
 		try {
-			$results = $provider->search( $params['query'], RequestContext::getMain()->getUser() );
+			$results = $provider->search( $params['query'] ?? '', RequestContext::getMain()->getUser() );
 		} catch ( NoAuthException $e ) {
 			throw new HttpException( $e->getMessage(), $e->getCode() );
 		} catch ( \Exception $e ) {
@@ -63,7 +63,7 @@ class SearchIssueHandler extends SimpleHandler {
 			'query' => [
 				static::PARAM_SOURCE => 'query',
 				ParamValidator::PARAM_TYPE => 'string',
-				ParamValidator::PARAM_REQUIRED => true,
+				ParamValidator::PARAM_REQUIRED => false,
 			]
 		];
 	}
