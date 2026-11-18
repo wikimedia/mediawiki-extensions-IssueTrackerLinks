@@ -10,7 +10,7 @@ ext.issuetrackerlinks.droplet.Form = function ( config ) {
 	this.inspector = config.inspector;
 	this.patternRegex = null;
 	this.innerForm = null;
-	this.commandParams = this.inspector.commandParams || {};
+	this.commandParams = {};
 	this.lookupFieldLayout = null;
 	this.lookupWidget = null;
 	this.lookupOptionSelected = false;
@@ -23,6 +23,7 @@ ext.issuetrackerlinks.droplet.Form = function ( config ) {
 	this.lookupAuthProvider = '';
 	this.authWindow = null;
 	this.onAuthMessageHandler = this.onAuthMessage.bind( this );
+
 	window.addEventListener( 'message', this.onAuthMessageHandler );
 
 	this.$linkPreview = $( '<a>' )
@@ -35,6 +36,11 @@ ext.issuetrackerlinks.droplet.Form = function ( config ) {
 };
 
 OO.inheritClass( ext.issuetrackerlinks.droplet.Form, mw.ext.forms.standalone.Form );
+
+ext.issuetrackerlinks.droplet.Form.prototype.getCommandParams = function () {
+	const commandParams = this.inspector ? this.inspector.commandParams : null;
+	return commandParams && typeof commandParams === 'object' ? commandParams : {};
+};
 
 ext.issuetrackerlinks.droplet.Form.prototype.makeItems = function () {
 	return [
@@ -69,9 +75,11 @@ ext.issuetrackerlinks.droplet.Form.prototype.makeItems = function () {
 };
 
 ext.issuetrackerlinks.droplet.Form.prototype.onRenderComplete = function ( form ) {
+	this.commandParams = this.getCommandParams();
 	this.innerForm = form;
 	const initValue = form.getItem( 'type' ).getValue();
-	const newValue = initValue || this.commandParams.type || '';
+
+	const newValue = this.commandParams.type || initValue || '';
 	if ( newValue ) {
 		this.setInspectorTitle( newValue );
 		this.setPatternRegex( newValue );
@@ -101,12 +109,15 @@ ext.issuetrackerlinks.droplet.Form.prototype.onRenderComplete = function ( form 
 		const type = form.getItem( 'type' ).getValue();
 		this.setPatternRegex( type );
 		this.refreshProviderInputMode();
+		this.updateInspectorSize();
 	}, 1 );
+	this.updateInspectorSize();
 	this.inspector.commandParams = {};
+	this.commandParams = {};
 };
 
 ext.issuetrackerlinks.droplet.Form.prototype.onUpdateValue = function ( data ) {
-	this.commandParams = this.inspector.commandParams;
+	this.commandParams = this.getCommandParams();
 	if ( !this.innerForm ) {
 		return;
 	}
@@ -118,7 +129,12 @@ ext.issuetrackerlinks.droplet.Form.prototype.onUpdateValue = function ( data ) {
 			this.setPatternRegex( type );
 		}
 		this.refreshProviderInputMode();
+		this.updateInspectorSize();
+		return;
 	}
+	this.setPatternRegex( '' );
+	this.disableLookupMode();
+	this.updateInspectorSize();
 };
 
 ext.issuetrackerlinks.droplet.Form.prototype.setInspectorTitle = function ( key ) {
@@ -145,6 +161,15 @@ ext.issuetrackerlinks.droplet.Form.prototype.setPatternRegex = function ( type )
 	this.patternRegex = null;
 };
 
+ext.issuetrackerlinks.droplet.Form.prototype.updateInspectorSize = function () {
+	if ( !this.inspector || typeof this.inspector.updateSize !== 'function' ) {
+		return;
+	}
+	requestAnimationFrame( () => {
+		this.inspector.updateSize();
+	} );
+};
+
 ext.issuetrackerlinks.droplet.Form.prototype.updateLinkPreview = function ( url ) {
 	const label = this.getLinkPreviewLabel( url );
 	if ( label ) {
@@ -155,6 +180,7 @@ ext.issuetrackerlinks.droplet.Form.prototype.updateLinkPreview = function ( url 
 	} else {
 		this.$linkPreview.hide();
 	}
+	this.updateInspectorSize();
 };
 
 ext.issuetrackerlinks.droplet.Form.prototype.getLinkPreviewLabel = function ( url ) {
@@ -175,14 +201,28 @@ ext.issuetrackerlinks.droplet.Form.prototype.getLinkPreviewLabel = function ( ur
 };
 
 ext.issuetrackerlinks.droplet.Form.prototype.getCurrentDataProvider = function () {
-	const type = this.innerForm ? this.innerForm.getItem( 'type' ).getValue() : '';
+	const commandParams = this.getCommandParams();
+	let type = '';
+	if ( 'type' in commandParams ) {
+		type = commandParams.type;
+	} else {
+		type = this.innerForm ? this.innerForm.getItem( 'type' ).getValue() : '';
+	}
 	const pattern = this.patterns[ type ] || {};
 
-	return this.commandParams.dataProvider ||
-		this.commandParams[ 'data-provider' ] ||
-		pattern.dataProvider ||
-		pattern[ 'data-provider' ] ||
-		'';
+	if ( 'dataProvider' in commandParams ) {
+		return commandParams.dataProvider;
+	}
+	if ( 'data-provider' in commandParams ) {
+		return commandParams[ 'data-provider' ];
+	}
+	if ( 'dataProvider' in pattern ) {
+		return pattern.dataProvider;
+	}
+	if ( 'data-provider' in pattern ) {
+		return pattern[ 'data-provider' ];
+	}
+	return '';
 };
 
 ext.issuetrackerlinks.droplet.Form.prototype.refreshProviderInputMode = function () {
@@ -197,7 +237,11 @@ ext.issuetrackerlinks.droplet.Form.prototype.refreshProviderInputMode = function
 	const url = mw.util.wikiScript( 'rest' ) + '/issuetrackerlinks/v0/config/data-provider/' +
 		encodeURIComponent( dataProvider );
 
-	fetch( url )
+	const queryParams = new URLSearchParams( {
+		searchable: true
+	} );
+
+	fetch( `${ url }?${ queryParams }` )
 		.then( ( response ) => {
 			if ( !response.ok ) {
 				throw new Error( 'Failed to load provider details for "' + dataProvider + '"' );
@@ -255,6 +299,7 @@ ext.issuetrackerlinks.droplet.Form.prototype.enableLookupMode = function ( provi
 	// When lookup is enabled, clear input, so user can search for another issue
 	this.lookupWidget.setValue( '' );
 	this.lookupOptionSelected = false;
+	this.updateInspectorSize();
 };
 
 ext.issuetrackerlinks.droplet.Form.prototype.disableLookupMode = function () {
@@ -270,6 +315,7 @@ ext.issuetrackerlinks.droplet.Form.prototype.disableLookupMode = function () {
 		this.urlLabelItem.$element.show();
 	}
 	urlWidget.$element.show();
+	this.updateInspectorSize();
 };
 
 ext.issuetrackerlinks.droplet.Form.prototype.onLookupSearchError = function ( error ) {
@@ -317,6 +363,7 @@ ext.issuetrackerlinks.droplet.Form.prototype.showLookupAuthPrompt = function ( p
 	}
 	this.lookupFieldLayout.$element.hide();
 	this.lookupAuthPanel.$element.show();
+	this.updateInspectorSize();
 };
 
 ext.issuetrackerlinks.droplet.Form.prototype.hideLookupAuthPrompt = function () {
@@ -324,6 +371,7 @@ ext.issuetrackerlinks.droplet.Form.prototype.hideLookupAuthPrompt = function () 
 		this.lookupAuthPanel.$element.hide();
 	}
 	this.lookupAuthProvider = '';
+	this.updateInspectorSize();
 };
 
 ext.issuetrackerlinks.droplet.Form.prototype.openAuthWindow = function ( authUrl ) {
@@ -354,6 +402,7 @@ ext.issuetrackerlinks.droplet.Form.prototype.onAuthMessage = function ( event ) 
 		this.lookupWidget.populateLookupMenu();
 	}
 	window.focus();
+	this.updateInspectorSize();
 };
 
 ext.issuetrackerlinks.droplet.Form.prototype.onLookupInputChange = function () {
