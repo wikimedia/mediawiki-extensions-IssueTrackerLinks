@@ -7,6 +7,7 @@ use MediaWiki\Extension\IssueTrackerLinks\Auth\RedirectUriProvider;
 use MediaWiki\Extension\IssueTrackerLinks\DataProviderBackend\SearchableBackendProvider;
 use MediaWiki\Extension\IssueTrackerLinks\DataProviderStore;
 use MediaWiki\Output\OutputPage;
+use MediaWiki\Permissions\Authority;
 use MediaWiki\Permissions\PermissionManager;
 use MediaWiki\Rest\HttpException;
 use MediaWiki\Rest\Response;
@@ -30,10 +31,17 @@ class GetDataProviderData extends SimpleHandler {
 	}
 
 	/**
-	 * @return true
+	 * @return bool
+	 */
+	public function needsReadAccess() {
+		return true;
+	}
+
+	/**
+	 * @return bool
 	 */
 	public function needsWriteAccess() {
-		return true;
+		return false;
 	}
 
 	/**
@@ -41,12 +49,24 @@ class GetDataProviderData extends SimpleHandler {
 	 * @throws HttpException
 	 */
 	public function execute() {
-		$this->assertIsAdmin( RequestContext::getMain()->getAuthority() );
 		$params = $this->getValidatedParams();
+
+		$checkSearchable = $params['searchable'] ?? false;
+		if ( $checkSearchable ) {
+			$this->assertIsEditor( RequestContext::getMain()->getAuthority() );
+		} else {
+			$this->assertIsAdmin( RequestContext::getMain()->getAuthority() );
+		}
 
 		$provider = $this->dataProviderStore->getProvider( str_replace( '_', ' ', $params['name'] ) );
 		if ( !$provider ) {
 			throw new HttpException( 'Provider not found', 404 );
+		}
+		if ( $checkSearchable ) {
+			return $this->getResponseFactory()->createJson( [
+				'name' => $provider->getName(),
+				'searchable' => $provider->getBackend() instanceof SearchableBackendProvider,
+			] );
 		}
 
 		OutputPage::setupOOUI();
@@ -56,8 +76,18 @@ class GetDataProviderData extends SimpleHandler {
 			'type' => $provider->getBackend()->getKey(),
 			'viewData' => $provider->getBackend()->getViewLayout()->toString(),
 			'redirect_uri' => $this->redirectUriProvider->getRedirectUri( $provider->getBackend() ),
-			'searchable' => $provider->getBackend() instanceof SearchableBackendProvider,
 		] );
+	}
+
+	/**
+	 * @param Authority $user
+	 * @return void
+	 * @throws HttpException
+	 */
+	private function assertIsEditor( Authority $user ): void {
+		if ( !$this->permissionManager->userHasRight( $user->getUser(), 'edit' ) ) {
+			throw new HttpException( 'permissiondenied', 403 );
+		}
 	}
 
 	/**
@@ -69,6 +99,12 @@ class GetDataProviderData extends SimpleHandler {
 				static::PARAM_SOURCE => 'path',
 				ParamValidator::PARAM_TYPE => 'string',
 				ParamValidator::PARAM_REQUIRED => true,
+			],
+			'searchable' => [
+				static::PARAM_SOURCE => 'query',
+				ParamValidator::PARAM_TYPE => 'boolean',
+				ParamValidator::PARAM_REQUIRED => false,
+				ParamValidator::PARAM_DEFAULT => false,
 			]
 		];
 	}

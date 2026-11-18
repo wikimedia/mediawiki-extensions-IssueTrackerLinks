@@ -90,6 +90,7 @@ $( () => {
 		await mw.loader.using( [ 'ext.issuetrackerlinks.popupIssue' ] );
 		const PopupContentClass = mw.loader.require( 'ext.issuetrackerlinks.popupIssue' );
 
+		data.lazyLoad = true;
 		const popupContent = new PopupContentClass( data );
 		// Convert this element to OO.ui.PopupButtonWidget()
 		const popupButton = new OO.ui.PopupButtonWidget( { // eslint-disable-line mediawiki/class-doc
@@ -106,7 +107,7 @@ $( () => {
 
 		// Update link tag
 		popupContent.connect( popupButton, {
-			loaded: ( closingData, isClosed ) => {
+			loaded: ( issueData, isClosed ) => {
 				if ( isClosed ) {
 					popupButton.$element.addClass( 'mw-issue-link-issue-closed' );
 				}
@@ -117,10 +118,10 @@ $( () => {
 		} );
 
 		// If couldn't fetch before, retry on opening
-		popupButton.connect( popupContent, {
+		popupButton.popup.connect( this, {
 			toggle: ( visible ) => {
-				if ( visible && !this.fetched ) {
-					this.fetch();
+				if ( visible && !popupContent.fetched ) {
+					popupContent.fetch();
 				}
 			}
 		} );

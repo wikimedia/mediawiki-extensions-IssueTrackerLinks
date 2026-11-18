@@ -9,10 +9,16 @@ const PopupContent = function ( cfg ) {
 	this.onAuthMessageHandler = this.onAuthMessage.bind( this );
 	window.addEventListener( 'message', this.onAuthMessageHandler );
 	this.$element.append( this.$contentCnt );
+	this.lazyLoad = cfg.lazyLoad;
 
 	this.fetched = false;
 	this.$element.addClass( 'issuetrackerlinks-popup-content' );
-	this.fetch();
+
+	this.$loader = new OO.ui.ProgressBarWidget( { progress: false } ).$element;
+	this.$element.append( this.$loader );
+	if ( !this.lazyLoad ) {
+		this.fetch();
+	}
 };
 
 OO.inheritClass( PopupContent, OO.ui.PanelLayout );
@@ -40,6 +46,9 @@ PopupContent.prototype.makeLayout = function () {
 
 PopupContent.prototype.fetch = function () {
 	const process = async () => {
+		if ( this.fetched ) {
+			return;
+		}
 		const url = mw.util.wikiScript( 'rest' ) + '/issuetrackerlinks/v0/get-issue';
 		const postData = {
 			entityData: this.fetchParams,
@@ -80,8 +89,9 @@ PopupContent.prototype.fetch = function () {
 		}
 		this.$header.show();
 		const data = await res.json();
-		this.providedBy = data.providedBy;
+		this.providedBy = data._provided_by; // eslint-disable-line no-underscore-dangle
 
+		this.$loader.hide();
 		this.render( data );
 		this.fetched = true;
 		this.emit( 'loaded', data, data.isClosed );
