@@ -251,9 +251,9 @@ ext.issuetrackerlinks.droplet.Form.prototype.enableLookupMode = function ( provi
 	}
 	urlWidget.$element.hide();
 
-	const currentUrl = urlWidget.getValue();
 	this.lookupOptionSelected = true;
-	this.lookupWidget.setValue( currentUrl ? this.getLinkPreviewLabel( currentUrl ) : '' );
+	// When lookup is enabled, clear input, so user can search for another issue
+	this.lookupWidget.setValue( '' );
 	this.lookupOptionSelected = false;
 };
 

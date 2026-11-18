@@ -81,6 +81,13 @@ ext.issuetrackerlinks.droplet.IssueLookupWidget.prototype.getLookupCacheDataFrom
 		return response;
 	};
 
+ext.issuetrackerlinks.droplet.IssueLookupWidget.prototype.setValue = function ( value ) {
+	if ( typeof value !== 'undefined' && typeof value !== 'string' ) {
+		return;
+	}
+	ext.issuetrackerlinks.droplet.IssueLookupWidget.super.prototype.setValue.call( this, value );
+};
+
 ext.issuetrackerlinks.droplet.IssueLookupWidget.prototype.getLookupMenuOptionsFromData =
 	function ( data ) {
 		if ( !Array.isArray( data ) ) {
