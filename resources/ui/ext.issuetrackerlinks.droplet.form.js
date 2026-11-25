@@ -422,8 +422,14 @@ ext.issuetrackerlinks.droplet.Form.prototype.onLookupOptionChoose = function ( o
 		return;
 	}
 
+	const commandParams = this.getCommandParams();
 	const data = option.getData() || {};
-	const type = this.innerForm.getItem( 'type' ).getValue();
+	let type = '';
+	if ( 'type' in commandParams ) {
+		type = commandParams.type;
+	} else {
+		type = this.innerForm ? this.innerForm.getItem( 'type' ).getValue() : '';
+	}
 	const pattern = this.patterns[ type ] || null;
 	if ( !pattern ) {
 		return;
